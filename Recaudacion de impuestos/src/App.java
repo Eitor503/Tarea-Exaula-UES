@@ -135,7 +135,7 @@ public class App {
     public static void registrarDatos() {
 
 
-        System.out.println("Módulo 2 - Registrar datos");
+        System.out.println("Módulo 2 - Registrar datossdfsdsdfadfdafdsfsd");
     }
 
 
