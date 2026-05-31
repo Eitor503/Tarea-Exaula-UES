@@ -35,24 +35,24 @@ public class App {
 
         do {
 
-        System.out.println("*****************************************");
-        System.out.println(" SISTEMA DE RECAUDACIÓN DE IMPUESTOS");
-        System.out.println("*****************************************");
+        System.out.println("-------------------------------------------");
+        System.out.println("|   SISTEMA DE RECAUDACIÓN DE IMPUESTOS   |");
+        System.out.println("-------------------------------------------");
 
-        System.out.println("1. Registrar nuevos municipios");
-        System.out.println("2. Guardar nuevos datos en CSV");
-        System.out.println("3. Reporte de recaudación por zona");
-        System.out.println("4. Reporte de recaudación por municipio");
-        System.out.println("5. Reporte por zona en año específico");
-        System.out.println("6. Total ingresos desde 2020");
-        System.out.println("7. Municipio con mayor ingreso");
-        System.out.println("8. Municipio con menor ingreso");
-        System.out.println("9. Reporte mensual por año");
-        System.out.println("10. Total ingresos por año");
-        System.out.println("11. Ordenar datos (Bubble Sort)");
-        System.out.println("12. Salir");
+        System.out.println("| 1. Registrar nuevos municipios          |");
+        System.out.println("| 2. Guardar nuevos datos en CSV          |");
+        System.out.println("| 3. Reporte de recaudación por zona      |");
+        System.out.println("| 4. Reporte de recaudación por municipio |");
+        System.out.println("| 5. Reporte por zona en año específico   |");
+        System.out.println("| 6. Total ingresos desde 2020            |");
+        System.out.println("| 7. Municipio con mayor ingreso          |");
+        System.out.println("| 8. Municipio con menor ingreso          |");
+        System.out.println("| 9. Reporte mensual por año              |");
+        System.out.println("| 10. Total ingresos por año              |");
+        System.out.println("| 11. Ordenar datos (Bubble Sort)         |");
+        System.out.println("| 12. Salir                               |");
 
-        System.out.println("*****************************************");
+        System.out.println("-------------------------------------------");
 
             System.out.print("Seleccione una opción: ");
             opcion = sc.nextInt();
