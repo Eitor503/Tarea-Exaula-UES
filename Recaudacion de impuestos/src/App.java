@@ -1,15 +1,26 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class App {
 
     // =========================================
-    // VARIABLES GLOBALES
+    // VARIABLES Y CONSTANTES GLOBALES
     // =========================================
+
+    // Constantes para acceder al índice de los elementos de la tabla
+    static final int ANIO = 0;
+    static final int MES = 1;
+    static final int ZONA = 2;
+    static final int DEPARTAMENTO = 3;
+    static final int ID_MUNICIPIO = 4;
+    static final int NOMBRE_MUNICIPIO = 5;
+    static final int MONTO = 6;
+
 
     static Scanner sc = new Scanner(System.in);
 
     // Matriz principal
-    static String[][] datos = new String[500][6];
+    static String[][] datos = new String[500][7];
 
     // Control de registros
     static int totalRegistros = 0;
@@ -21,7 +32,8 @@ public class App {
         2 = Zona
         3 = Departamento
         4 = ID Municipio
-        5 = Monto
+        5 = Nombre de municipio
+        6 = Monto
     */
 
 
@@ -30,7 +42,8 @@ public class App {
     // =========================================
 
     public static void main(String[] args) {
-
+        
+        inicializarDatos();
         int opcion;
 
         do {
@@ -124,7 +137,15 @@ public class App {
 
     public static void inicializarDatos() {
 
-        System.out.println("Módulo 1");
+        // Se inicializa el archivo csv a leer
+        File archivo = new File("Impuestos.csv");
+
+        // Se valida su existencia
+        if(!archivo.exists()){
+            System.out.println("El archivo no se pudo abrir");
+            return;
+        }
+
     }
 
 
