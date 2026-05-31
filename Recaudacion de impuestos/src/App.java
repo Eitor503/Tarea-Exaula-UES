@@ -135,7 +135,8 @@ public class App {
 
     public static void registrarDatos() {
 
-        System.out.println("Módulo 2");
+
+        System.out.println("Módulo 2 ISAAAAA");
     }
 
 
