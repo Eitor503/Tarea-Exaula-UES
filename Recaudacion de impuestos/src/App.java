@@ -146,6 +146,41 @@ public class App {
             return;
         }
 
+        try (Scanner lector = new Scanner(archivo)){
+
+            // Saltarse el encabezado del archivo
+            if (lector.hasNextLine()){
+                lector.nextLine();
+            }
+
+            // Variable para guardar los registros recorridos
+            int i = 0;
+
+            while (lector.hasNextLine() && i < datos.length){
+                // Variable donde se guarda la línea actual recorrida
+            String lineaElementos = lector.nextLine();
+            
+            String[] columnas = lineaElementos.split(",");
+
+            // Se guardarán datos sí y sólo sí:
+            // Hay 7 columnas en la línea (Para evitar datos sucios o incompletos)
+            if (columnas.length == 7){
+
+                for (int j = 0; j < 7; j++){
+                    datos[i][j]  = columnas[j]; // Se guarda cada elemento en la fila y columna correspondiente
+                }
+
+                i++;
+            }
+            }
+
+        }catch (Exception e){
+
+            System.out.println("Error al leer el archivo.");
+            e.printStackTrace();
+
+        }
+
     }
 
 
