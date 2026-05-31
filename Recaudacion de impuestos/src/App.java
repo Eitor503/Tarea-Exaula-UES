@@ -131,12 +131,11 @@ public class App {
     // =========================================
     // MÓDULO 2
     // Responsable: Fátima
-    // =========================================
-
+    
     public static void registrarDatos() {
 
 
-        System.out.println("Módulo 2 ISAAAAA");
+        System.out.println("Módulo 2 - Registrar datos");
     }
 
 
