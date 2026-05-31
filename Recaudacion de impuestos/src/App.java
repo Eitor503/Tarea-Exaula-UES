@@ -16,7 +16,6 @@ public class App {
 
     /*
         COLUMNAS MATRIZ
-
         0 = Año
         1 = Mes
         2 = Zona
@@ -114,7 +113,7 @@ public class App {
 
             System.out.println();
 
-        } while(opcion != 13);
+        } while(opcion != 12);
 
     }
 
