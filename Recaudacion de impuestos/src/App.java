@@ -550,9 +550,35 @@ System.out.println("=======================================================");
 
     public static void municipioMayorIngreso() {
         System.out.println("Módulo 8");
+        
+        // Declaracion de vectores
+        double[] montoMunicipio = new double[44];
+        String[] municipio = new String[44];
 
+        //=====================================
+        // Acumular ingresos por municipio
+        //====================================
+        for (int i = 0; i < totalRegistros; i++) {
+            int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) - 1;
+            montoMunicipio[idMunicipio] = montoMunicipio[idMunicipio] + Double.parseDouble(datos[i][MONTO]);
+            municipio[idMunicipio] = datos[i][NOMBRE_MUNICIPIO];
+        }
+            //=================================================
+            //Buscar el mayor ingreso
+            //=================================================
+            int mayor = 0;
+            for (int i = 0; i < 44; i++) {
+                if (montoMunicipio[i] > montoMunicipio[mayor]) {
+                    mayor = i;
+                }
+            }
+           // Mostrar resultados 
+    System.out.println("-------------------------------------");
+      System.out.println("Municipio con mayor ingreso");
+    System.out.println("-------------------------------------");
+      System.out.println("Municipio: " + municipio[mayor]);
+      System.out.println("Monto acumulado: $" + montoMunicipio[mayor]);
     }
-
 
     // =========================================
     // MÓDULO 9
