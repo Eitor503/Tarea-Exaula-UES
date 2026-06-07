@@ -707,8 +707,37 @@ public class App {
 
     public static void totalIngresosPorAnio() {
 
-        System.out.println("Módulo 11");
+    // Años válidos según el enunciado
+    int anioInicial = 2020;
+    int anioFinal = 2026;
+
+    System.out.println("----------------------------------");
+    System.out.println("TOTAL DE INGRESOS POR AÑO");
+    System.out.println("----------------------------------");
+
+    // Recorremos cada año
+    for (int anio = anioInicial; anio <= anioFinal; anio++) {
+
+        double totalAnual = 0;
+
+        // Recorremos todos los registros
+        for (int i = 0; i < totalRegistros; i++) {
+
+            if (datos[i][ANIO] == null) {
+                continue;
+            }
+
+            int anioRegistro = Integer.parseInt(datos[i][ANIO]);
+
+            if (anioRegistro == anio) {
+
+                totalAnual += Double.parseDouble(datos[i][MONTO]);
+            }
+        }
+
+        System.out.printf("%d -> $%.2f\n", anio, totalAnual);
     }
+}
 
 
     // =========================================
