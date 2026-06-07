@@ -467,7 +467,6 @@ static int totalNuevos = 0;
         } 
     } 
 
-    //Variables acumuladoras tradicionales para las tres zonas geográficas 
     double totalOccidente = 0.0; 
     double totalOriente = 0.0; 
     double totalCentralParacentral = 0.0; 
@@ -496,19 +495,16 @@ static int totalNuevos = 0;
             } 
         } 
     } 
-
-    System.out.println("\n======================================================="); 
     System.out.println("REPORTE DE RECAUDACIÓN PARA EL AÑO: " + anioElegido); 
-    System.out.println("======================================================="); 
-
+System.out.println("======================================================="); 
     if (!encontroDatos) { 
         System.out.println("No se encontraron registros de impuestos para el año " + anioElegido); 
     } else { 
         System.out.printf("ZONA OCCIDENTAL: $%.2f\n", totalOccidente); 
         System.out.printf("ZONA ORIENTAL: $%.2f\n", totalOriente); 
-        System.out.printf("ZONA CENTRAL/PARACENTRAL: $%.2f\n", totalCentralParacentral); // <-- CORREGIDO: Tenía el nombre viejo
+        System.out.printf("ZONA CENTRAL/PARACENTRAL: $%.2f\n", totalCentralParacentral); 
         System.out.println("-------------------------------------------------------"); 
-        System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); // <-- CORREGIDO: Tenía el nombre viejo
+        System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); 
     } 
     System.out.println("======================================================="); 
     }
