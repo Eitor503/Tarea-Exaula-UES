@@ -717,8 +717,47 @@ public class App {
     // =========================================
 
     public static void ordenarDatosBubbleSort() {
-
         System.out.println("Módulo 12");
+        //========================================
+        //Mostrar datos desordenados
+        //=======================================
+        System.out.println("---------------------------------------");
+           System.out.println("Datos desordenados:");
+        System.out.println("-------------------------------------");
+              for (int i = 0; i < totalRegistros; i++) {
+                for(int j = 0; j < 7; j++) {
+                    System.out.println(datos[i][j] + "\t");
+                }
+                System.out.println();
+              }
+              //====================================
+              // Ordenamiento de Bubble Sort
+              //====================================
+              for (int i = 0; i < totalRegistros -1; i++) {
+                for (int j = 0; j < totalRegistros -1 -i; j++) {
+                    if (Double.parseDouble(datos[j][MONTO]) > Double.parseDouble(datos[j+1][MONTO])) {
+
+                        // Intercambiar registro completo
+                        for (int k = 0; k < 7; k++) {
+                            String auxiliar = datos[j][k];
+                            datos[j][k] = datos[j+1][k];
+                            datos[j+1][k] = auxiliar;
+                        }
+                    }
+                }
+              }
+              //=====================================
+              //Mostrar datos ordenados
+              //=====================================
+System.out.println("--------------------------------------");
+   System.out.println("Datos ordenados");
+System.out.println("-----------------------------------");
+    for (int i = 0; i < totalRegistros; i++) {
+        for (int j = 0; j < 7; j++) {
+          System.out.println(datos[i][j] + "\t");
+        }
+          System.out.println();
+        }  
     }
 
 }
