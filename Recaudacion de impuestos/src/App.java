@@ -256,20 +256,21 @@ public class App {
     // =========================================
 
     public static void municipioMayorIngreso() {
-        String[] municipios = new String[44];
-        double[] totalMunicipio = new double[44];
+        double[] montoMunicipio = new double[44];
+        String[] totalMunicipio = new String[44];
         //---------------------------------------
         // Acumular los ingresos por mnicipio
+        //---------------------------------------
         for (int i = 0; i < totalRegistros; i++) {
-            int id = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
-            totalMunicipio[id] = totalMunicipio[id] + Double.parseDouble(datos[i][ID_MUNICIPIO]);
-            nombreMunicipio[id] = datos[i][NOMBRE-MUNICIPIO];
-        
+            int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
+            montoMunicipio[idMunicipio] = montoMunicipio[idMunicipio] + Double.parseDouble(datos[i][MONTO]);
+            municipio[idMunicipio] = datos[i][NOMBRE_MUNICIPIO];
         }
-        // Buscar el municipio con elmayor ingreso
+        // Buscar el municipio con el mayor ingreso
+        //----------------------------------------
         int mayor = 0;
         for (int i = 0; i< 44; i++) {
-            if (totalMunicipio[i] > totalMunicipio[mayor]){
+            if (montoMunicipio[i] > montoMunicipio[mayor]){
                 mayor = i;
             }
         }
@@ -279,8 +280,8 @@ public class App {
         System.out.println("-----------------------------------------------------");
         system.out.println("MUNICIPIO CON MAYOR INGRESO");
         System.out.println("-----------------------------------------------------");
-        System.out.println("Municipio: " + nombreMunicipio[mayor]);
-        System.out.println("Monto Acumulado: " + totalMunicipio[mayor]);
+        System.out.println("Municipio: " + municipio[mayor]);
+        System.out.println("Monto Acumulado: $" + montoMunicipio[mayor]);
     }
 
 
