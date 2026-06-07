@@ -69,6 +69,7 @@ public class App {
 
             System.out.print("Seleccione una opción: ");
             opcion = Integer.parseInt(sc.nextLine());
+            System.out.println();
 
             switch(opcion) {
 
@@ -238,7 +239,7 @@ public class App {
     // 2. VALIDACIÓN DEL AÑO (Desde 2020)
     // =========================================
     int anio = 0;
-    while (true) { // Bucle infinito hasta que se ingrese un año válido
+    while (true) { // Bucle infinito hasta que se ingrese un año válido ARREGLA ESO FÁTIMA
         System.out.print("Ingrese año (desde el año 2020 por favor): "); 
         try { // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, 
         // se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente
@@ -273,7 +274,7 @@ public class App {
     // 4. VALIDACIÓN DEL MONTO (Positivo)
     // =========================================
     double monto = 0.0;
-    while (true) {
+    while (true) { //ARREGLA ESO FÁTIMA
         System.out.print("Ingrese monto (positivo por favor): ");
         try {
             monto = Double.parseDouble(sc.nextLine().trim());
@@ -303,7 +304,7 @@ public class App {
     totalRegistros++; // Ahora totalRegistros apunta a la siguiente fila disponible, es decir, el número total de registros cargados en la matriz
 
     System.out.println("\n¡Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
-   
+
 }
 
 
