@@ -190,41 +190,45 @@ public class App {
     // =========================================
     // MÓDULO 2
     // Responsable: Fatima
-    
-    public static void registrarDatos() {
-        System.out.println("Módulo 2 - Registrar datos de nuevos municipios");
+static String[][] nuevosRegistros = new String[500][7]; 
+static int totalNuevos = 0;
 
-//Validación de que no se exceda el límite de los 500 registros
-        if (totalRegistros >= datos.length) {
-            System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros.");
-            return;
-        }
+ public static void registrarDatos() {
+        System.out.println("Módulo 2 - Registrar nuevos municipios");
+    {
+    if (totalRegistros >= datos.length) {
+        System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros.");
+        return;
+    }
 
-        // =========================================
-    // 1. INGRESO Y VALIDACIÓN DEL ID AUTO-COMPLETADO
-    // =========================================
+    // Validar si la matriz externa existe y tiene espacio
+    if (nuevosRegistros == null) {
+        System.out.println("Error del sistema: La matriz 'nuevosRegistros' no está inicializada.");
+        return;
+    }
+    if (totalNuevos >= nuevosRegistros.length) {
+        System.out.println("Error: La matriz externa de nuevos registros está llena.");
+        return;
+    }
     String idInput = "";
     int indiceEncontrado = -1;
-    // El bucle se repetirá hasta que el usuario ingrese un ID que exista en los registros de referencia
-    while (indiceEncontrado == -1) { // Mientras no se haya encontrado un índice válido para el ID ingresado, seguimos pidiendo al usuario que ingrese un ID
+
+    // Bucle para el ID
+    while (indiceEncontrado == -1) {
         System.out.print("Ingrese ID del municipio: ");
         idInput = sc.nextLine().trim();
 
-        // Búsqueda secuencial manual en los registros ya existentes
-        for (int i = 0; i < totalRegistros; i++) { // Recorremos sólo hasta el total de registros cargados, no toda la matriz
-            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) { // Validamos que el ID no sea nulo y que coincida con el ingresado
-                indiceEncontrado = i; // Guardamos el índice donde hallamos este ID
+        for (int i = 0; i < totalRegistros; i++) {
+            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) {
+                indiceEncontrado = i;
                 break;
             }
         }
-// Si después de recorrer los registros no se encontró el ID, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo ID
         if (indiceEncontrado == -1) {
-            System.out.println("Error, el ID ingresado no existe en los registros. Intente de nuevo por favor.");
+            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44).");
         }
     }
 
-    // Extraemos de forma automática los campos correspondientes gracias al índice hallado es decir como el autocompletado que se pidió en el punto anterior, 
-    // para evitar errores de tipeo y agilizar el proceso de registro
     String zonaAuto = datos[indiceEncontrado][ZONA];
     String deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
     String municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO];
@@ -233,66 +237,53 @@ public class App {
     System.out.println("-> [Autocompletado] Departamento: " + deptoAuto);
     System.out.println("-> [Autocompletado] Municipio: " + municipioAuto);
 
-    //Para la validacion de los siguientes campos, se uso la misma estructura igual para año, mes y el monto, se han implementado validaciones generales 
-    // para asegurar que los datos ingresados sean del tipo y formato correcto.
-    // =========================================
-    // 2. VALIDACIÓN DEL AÑO (Desde 2020)
-    // =========================================
     int anio = 0;
-    //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
-    while (true) { // Bucle infinito hasta que se ingrese un año válido 
-        System.out.print("Ingrese año (desde el año 2020 por favor): "); 
-        try { // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, 
-        // se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente
+    boolean anioValido = false;
+    while (!anioValido) {
+        System.out.print("Ingrese año (desde 2020): ");
+        try {
             anio = Integer.parseInt(sc.nextLine().trim());
             if (anio >= 2020) {
-                break; // Entrada válida, rompemos el bucle
-            } // Si el año es menor a 2020, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo año
-            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+                anioValido = true;
+            } else {
+                System.out.println("Error. El año debe ser igual o mayor a 2020.");
+            }
         } catch (NumberFormatException e) {
-            System.out.println("Error, por favor Ingrese un número entero válido.");
+            System.out.println("Error. Ingrese un número entero válido.");
         }
     }
-
-    // =========================================
-    // 3. VALIDACIÓN DEL MES (Entre 1 y 12)
-    // =========================================
     int mes = 0;
-    while (true) { //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
-        System.out.print("Ingrese mes (1 a 12 por favor): ");
+    boolean mesValido = false;
+    while (!mesValido) {
+        System.out.print("Ingrese mes (1 a 12): ");
         try {
             mes = Integer.parseInt(sc.nextLine().trim());
             if (mes >= 1 && mes <= 12) {
-                break; // Entrada válida
+                mesValido = true;
+            } else {
+                System.out.println("Error. El mes debe estar entre 1 y 12.");
             }
-            System.out.println("Error, el mes debe estar entre 1 y 12. Por favor intentar de nuevo.");
         } catch (NumberFormatException e) {
-            System.out.println("Erro, Ingrese un número entero válido.");
+            System.out.println("Error. Ingrese un número entero válido.");
         }
     }
-
-    // =========================================
-    // 4. VALIDACIÓN DEL MONTO (Positivo)
-    // =========================================
-    double monto = 0.0;
-    while (true) { //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
-        System.out.print("Ingrese monto (positivo por favor): ");
+    double monto = 0;
+    boolean montoValido = false;
+    while (!montoValido) {
+        System.out.print("Ingrese monto (0 o mayor): ");
         try {
             monto = Double.parseDouble(sc.nextLine().trim());
-            if (monto > 0) { //EL MONTO PUEDE SER 0, ARREGLA ESO
-                break; // Entrada válida
-            } // Si el monto no es positivo, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo monto
-            System.out.println("Error. El monto debe ser estrictamente mayor a 0.");
+            if (monto >= 0) {
+                montoValido = true;
+            } else {
+                System.out.println("Error. El monto no puede ser negativo.");
+            }
         } catch (NumberFormatException e) {
-            System.out.println("Error. Ingrese un valor numérico decimal válido.");
+            System.out.println("Error. Ingrese un número decimal válido."); 
         }
-    }
 
-    // =========================================
-    // 5. GUARDAR NUEVO REGISTRO EN LA MATRIZ PRINCIPAL
-    // =========================================
-    // Una vez validados todos los datos, los guardamos en la siguiente fila disponible de la matriz principal utilizando el control de registros 
-    // totalRegistros para saber dónde está la siguiente posición/fila disponible
+    }
+    // Guardar en matriz principal
     datos[totalRegistros][ANIO] = String.valueOf(anio);
     datos[totalRegistros][MES] = String.valueOf(mes);
     datos[totalRegistros][ZONA] = zonaAuto;
@@ -301,13 +292,22 @@ public class App {
     datos[totalRegistros][NOMBRE_MUNICIPIO] = municipioAuto;
     datos[totalRegistros][MONTO] = String.valueOf(monto);
 
-    // Incrementamos el control de registros de la matriz para apuntar a la siguiente fila disponible para el próximo registro
-    totalRegistros++; // Ahora totalRegistros apunta a la siguiente fila disponible, es decir, el número total de registros cargados en la matriz
+    // Guardar en matriz externa
+    nuevosRegistros[totalNuevos][ANIO] = String.valueOf(anio);
+    nuevosRegistros[totalNuevos][MES] = String.valueOf(mes);
+    nuevosRegistros[totalNuevos][ZONA] = zonaAuto;
+    nuevosRegistros[totalNuevos][DEPARTAMENTO] = deptoAuto;
+    nuevosRegistros[totalNuevos][ID_MUNICIPIO] = idInput;
+    nuevosRegistros[totalNuevos][NOMBRE_MUNICIPIO] = municipioAuto;
+    nuevosRegistros[totalNuevos][MONTO] = String.valueOf(monto);
 
-    System.out.println("\n¡Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
+    totalRegistros++;
+    totalNuevos++;
 
+    System.out.println("\n¡Registro exitoso! Datos almacenados correctamente.");
 }
 
+}
 
     // =========================================
     // MÓDULO 3
