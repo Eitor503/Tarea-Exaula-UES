@@ -281,7 +281,7 @@ public class App {
         }
 
         // Mostramos los datos ordenados al final
-        System.out.println("AÑO\tOCCIDENTAL\tORIENTAL\tCENTRAL");
+        System.out.println("AÑO\tOCCIDENTAL\tORIENTAL\tCENTRAL/PARACENTRAL");
         for(int i = 0; i < reporte.length; i++) {
 
             System.out.print(reporte[i][0] + "\t");
