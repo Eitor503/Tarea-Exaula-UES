@@ -454,8 +454,84 @@ public class App {
 
     public static void reporteZonaAnioElegible() {
 
-        System.out.println("Módulo 6");
-    }
+        System.out.println("Módulo 6 Reporte por zona en año específico");
+
+    // Validar si existen datos cargados en el sistema 
+    if (totalRegistros == 0) { 
+        // Si totalRegistros es 0, significa que no hay datos cargados en la matriz, por lo que no tiene sentido intentar generar un reporte 
+        System.out.println("No hay datos en la matriz principal para generar reportes."); 
+        return; 
+    } 
+
+    // Solicitar y validar el año elegido por el usuario (desde 2020) 
+    int anioElegido = 0; // Variable para almacenar el año ingresado por el usuario 
+    while (true) { // Bucle infinito hasta que se ingrese un año válido 
+        System.out.print("Ingrese el año a consultar (desde 2020) por favor: "); 
+        try { 
+            // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente 
+            anioElegido = Integer.parseInt(sc.nextLine().trim()); 
+            if (anioElegido >= 2020) { // Si el año es igual o mayor a 2020, es válido, por lo que rompemos el bucle para continuar con el reporte 
+                break; // Año válido, salimos del bucle 
+            } 
+            System.out.println("Error. El año debe ser igual o mayor a 2020."); // Si el año es menor a 2020, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo año 
+        } catch (NumberFormatException e) { 
+            // Si el usuario ingresa algo que no es un número entero, se lanzará esta excepción, por lo que mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo año 
+            System.out.println("Error, por favor dígite un número entero válido."); 
+        } 
+    } 
+
+    // 3. Variables acumuladoras tradicionales para las tres zonas geográficas 
+    double totalOccidente = 0.0; 
+    double totalOriente = 0.0; 
+    double totalCentralParacentral = 0.0; 
+    boolean encontroDatos = false; 
+
+    // Entra el año elegido por el usuario, lo convertimos a String para comparar textualmente con los datos de la matriz principal, ya que en la matriz los años están almacenados como texto (String) y no como números enteros, por lo que para hacer una comparación correcta entre el año ingresado por el usuario y los años almacenados en la matriz, es necesario convertir el año ingresado a String. De esta forma, podemos comparar directamente el año ingresado con los valores de la matriz sin problemas de tipo de dato. 
+    // Conviértelo a String para comparar textualmente con tu matriz global 
+    String anioBuscadoStr = String.valueOf(anioElegido); 
+
+    // 4. Recorrer la matriz principal una sola vez para filtrar y acumular los montos 
+    for (int j = 0; j < totalRegistros; j++) { 
+        // Validación preventiva contra celdas vacías o nulas 
+        if (datos[j][ANIO] == null || datos[j][ZONA] == null || datos[j][MONTO] == null) { 
+            continue; 
+        } 
+
+        // Si la fila de la matriz coincide con el año elegido por el usuario 
+        if (datos[j][ANIO].equals(anioBuscadoStr)) { 
+            encontroDatos = true; 
+            String zona = datos[j][ZONA]; 
+            double monto = Double.parseDouble(datos[j][MONTO]); 
+
+            // Clasificación manual por zonas utilizando tus constantes globales 
+            if (zona.equalsIgnoreCase("Occidente") || zona.equalsIgnoreCase("Occidental")) { 
+                totalOccidente += monto; 
+            } else if (zona.equalsIgnoreCase("Oriente") || zona.equalsIgnoreCase("Oriental")) { 
+                totalOriente += monto; 
+            } else { 
+                // Central / Paracentral 
+                totalCentralParacentral += monto; // <-- CORREGIDO: Tenía el nombre viejo
+            } 
+        } 
+    } 
+
+    // 5. Imprimir el reporte formateado en pantalla con formato de dos decimales 
+    System.out.println("\n======================================================="); 
+    System.out.println("REPORTE DE RECAUDACIÓN PARA EL AÑO: " + anioElegido); 
+    System.out.println("======================================================="); 
+
+    if (!encontroDatos) { 
+        System.out.println("No se encontraron registros de impuestos para el año " + anioElegido); 
+    } else { 
+        System.out.printf("ZONA OCCIDENTAL: $%.2f\n", totalOccidente); 
+        System.out.printf("ZONA ORIENTAL: $%.2f\n", totalOriente); 
+        System.out.printf("ZONA CENTRAL/PARACENTRAL: $%.2f\n", totalCentralParacentral); // <-- CORREGIDO: Tenía el nombre viejo
+        System.out.println("-------------------------------------------------------"); 
+        System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); // <-- CORREGIDO: Tenía el nombre viejo
+    } 
+    System.out.println("======================================================="); 
+}
+    
 
 
     // =========================================
