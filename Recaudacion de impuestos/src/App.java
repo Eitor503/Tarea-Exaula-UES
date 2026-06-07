@@ -643,9 +643,62 @@ public class App {
 
     public static void reporteMensualPorAnio() {
 
-        System.out.println("Módulo 10");
+    int anioBuscar;
+
+    // Validación del año
+    while (true) {
+
+        System.out.print("Ingrese el año a consultar: ");
+
+        try {
+
+            anioBuscar = Integer.parseInt(sc.nextLine());
+
+            if (anioBuscar >= 2020) {
+                break;
+            }
+
+            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+
+        } catch (Exception e) {
+
+            System.out.println("Ingrese un número válido.");
+        }
     }
 
+    // Vector para guardar los montos de cada mes
+    double[] totalMeses = new double[12];
+
+    // Recorremos la matriz principal
+    for (int i = 0; i < totalRegistros; i++) {
+
+        if (datos[i][ANIO] == null) {
+            continue;
+        }
+
+        int anio = Integer.parseInt(datos[i][ANIO]);
+
+        // Sólo se trabaja con el año solicitado
+        if (anio == anioBuscar) {
+
+            int mes = Integer.parseInt(datos[i][MES]);
+            double monto = Double.parseDouble(datos[i][MONTO]);
+
+            totalMeses[mes - 1] += monto;
+        }
+    }
+
+    System.out.println("----------------------------------");
+    System.out.println("REPORTE MENSUAL DEL AÑO " + anioBuscar);
+    System.out.println("----------------------------------");
+
+    for (int i = 0; i < totalMeses.length; i++) {
+
+        System.out.printf("Mes %d : $%.2f\n",
+                (i + 1),
+                totalMeses[i]);
+    }
+}
 
     // =========================================
     // MÓDULO 11
