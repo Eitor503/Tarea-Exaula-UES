@@ -68,7 +68,7 @@ public class App {
         System.out.println("-------------------------------------------");
 
             System.out.print("Seleccione una opción: ");
-            opcion = sc.nextInt();
+            opcion = Integer.parseInt(sc.nextLine());
 
             switch(opcion) {
 
@@ -124,7 +124,8 @@ public class App {
                     System.out.println("Opción inválida.");
             }
 
-            System.out.println();
+            System.out.printf("Presione cualquier tecla para continuar...");
+            sc.nextLine();
 
         } while(opcion != 12);
 
@@ -171,6 +172,7 @@ public class App {
                 }
 
                 i++;
+                totalRegistros++;
             }
             }
 
@@ -213,7 +215,80 @@ public class App {
 
     public static void reporteZonaAnual() {
 
-        System.out.println("Módulo 4");
+        // Matriz divida en tres secciones
+        // 0 año
+        // 1 total occidental
+        // 2 total oriental
+        // 3 total paracentral/central
+        String[][] reporte = {
+
+        {"2020", "0", "0", "0"},
+        {"2021", "0", "0", "0"},
+        {"2022", "0", "0", "0"},
+        {"2023", "0", "0", "0"},
+        {"2024", "0", "0", "0"},
+        {"2025", "0", "0", "0"},
+        {"2026", "0", "0", "0"}
+    };
+
+        
+        // Recorro cada fila de la matriz reporte
+        for (int i = 0; i < reporte.length; i++){
+            // Obtenemos el año y el valor de cada recaudación por zona
+            int anio = Integer.parseInt(reporte[i][0]);
+            double recaudacionOccidental = Double.parseDouble(reporte[i][1]);
+            double recaudacionOriental = Double.parseDouble(reporte[i][2]); 
+            double recaudacionCentral = Double.parseDouble(reporte[i][3]);
+
+            // Ahora recorremos la matriz principal para comparar datos
+            for (int j = 0; j < totalRegistros; j++){
+
+                if ( datos[j][ANIO] == null){
+                    continue; // Por si acaso hay algún dato vacío colado, nos saltamos esa línea
+                }
+                // Obtenemos el año de la fila de la matriz principal
+                int aniodatos = Integer.parseInt(datos[j][ANIO]);
+
+                // Validamos que el año filtrado sea el deseado
+                if (aniodatos == anio){
+                    
+                    // Obtenemos la zona a filtrar y el monto
+                    String zona_filtrar = datos[j][ZONA];
+                    double monto_filtrar = Double.parseDouble(datos[j][MONTO]);
+
+                    // Validamos de qué zona es la fila y la guardamos en el monto
+                    // correspondiente
+                    if (zona_filtrar.equals("Occidente")){
+                        recaudacionOccidental += monto_filtrar;
+                    }
+
+                    else if (zona_filtrar.equals("Oriente")){
+                        recaudacionOriental += monto_filtrar;
+                    }
+
+                    else {
+                        recaudacionCentral += monto_filtrar;
+                    }
+
+                }
+            }
+
+            // Guardamos los valores que obtuvimos
+            reporte[i][1] = String.format("%.2f", recaudacionOccidental);
+            reporte[i][2] = String.format("%.2f",recaudacionOriental);
+            reporte[i][3] = String.format("%.2f",recaudacionCentral);
+
+        }
+
+        // Mostramos los datos ordenados al final
+        System.out.println("AÑO\tOCCIDENTAL\tORIENTAL\tCENTRAL");
+        for(int i = 0; i < reporte.length; i++) {
+
+            System.out.print(reporte[i][0] + "\t");
+            System.out.print("$" + reporte[i][1] + "\t");
+            System.out.print("$" + reporte[i][2] + "\t");
+            System.out.println("$" + reporte[i][3]);
+        }
     }
 
 
