@@ -313,46 +313,38 @@ static int totalNuevos = 0;
     // MÓDULO 3
     // Responsable: Fátima
     // =========================================
-
     public static void guardarDatosCSV() {
-
-        System.out.println("Módulo 3 Guardar datos de nuevos municipios en CSV");
-// 1. Validar que la matriz no esté completamente vacía antes de intentar guardar, para evitar crear un archivo con líneas vacías o sin datos importantes. Si totalRegistros es 0, significa que no hay datos cargados en la matriz, por lo que no tiene sentido intentar guardar un archivo CSV.
-    if (totalRegistros == 0) {
-        System.out.println("No hay datos en la matriz para guardar.");
-        return; // Salimos del método para evitar crear un archivo vacío
+    if (totalNuevos == 0) {
+        System.out.println("Estimado usuario, usted no ha validado la información de ningún nuevo registro en el Módulo 2. Por favor, ingrese al Módulo 2 y registre al menos un nuevo municipio para luego poder guardar esa información de forma permanente en el archivo CSV. Gracias por su comprensión.");
+        return;
     }
 
     String nombreArchivo = "Impuestos.csv";
 
-    // 2. Abrimos el archivo en modo APPEND (true) es decir en el  modo SOBREESCRITURA, para añadir al final sin borrar nada
+    // Abrimos el archivo en modo APPEND (true) para añadir al final sin borrar las líneas existentes
     try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.FileWriter(nombreArchivo, true))) {
         
-        // 3. Tomamos la posición del ÚLTIMO registro ingresado en la memoria
-        // Como totalRegistros ya aumentó en registrarDatos(), el último está en (totalRegistros - 1)
-        int ultimoIndice = totalRegistros - 1; // El índice del último registro ingresado en la matriz
+        for (int i = 0; i < totalNuevos; i++) {
+            String lineaCsv = nuevosRegistros[i][ANIO] + "," +
+                              nuevosRegistros[i][MES] + "," +
+                              nuevosRegistros[i][ZONA] + "," +
+                              nuevosRegistros[i][DEPARTAMENTO] + "," +
+                              nuevosRegistros[i][ID_MUNICIPIO] + "," +
+                              nuevosRegistros[i][NOMBRE_MUNICIPIO] + "," +
+                              nuevosRegistros[i][MONTO];
+            
+            // Escribimos cada uno de los nuevos registros al final del archivo físico
+            escritor.println(lineaCsv);
+        }
 
-        // Construimos la línea de texto con el formato CSV usando las constantes
-        String lineaCsv = datos[ultimoIndice][ANIO] + "," +
-                          datos[ultimoIndice][MES] + "," +
-                          datos[ultimoIndice][ZONA] + "," +
-                          datos[ultimoIndice][DEPARTAMENTO] + "," +
-                          datos[ultimoIndice][ID_MUNICIPIO] + "," +
-                          datos[ultimoIndice][NOMBRE_MUNICIPIO] + "," +
-                          datos[ultimoIndice][MONTO];
-        // 4. Escribimos esta línea al final del archivo físico, gracias a que abrimos el archivo en modo APPEND, 
-        // no se borrará nada de lo que ya estaba y se añadirá esta nueva línea al final del archivo
-        // Escribimos únicamente este registro nuevo al final del archivo físico
-        escritor.println(lineaCsv);
-
-        System.out.println("El nuevo registro se ha agregado de forma exitosa permanente al archivo CSV.");
+        System.out.println("Se han agregado exitosamente " + totalNuevos + " registros nuevos de forma permanente al archivo CSV.");
+        totalNuevos = 0;
 
     } catch (Exception e) {
         System.out.println("Error. No fue posible agregar la información al archivo CSV.");
         e.printStackTrace();
     }
 }
-
 
     // =========================================
     // MÓDULO 4
