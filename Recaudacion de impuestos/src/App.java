@@ -574,6 +574,7 @@ public class App {
     // =========================================
 
     public static void municipioMayorIngreso() {
+        System.out.println("Módulo 8");
 
     }
 
@@ -584,8 +585,54 @@ public class App {
     // =========================================
 
     public static void municipioMenorIngreso() {
+        System.out.println("Modulo 9");
+        int anio;
+        int mes;
+        //=====================================
+        // Valiación del año
+        // ====================================
+        do {
+            System.out.println("Ingrese el año a consultar (2020-2026):");
+            anio = sc.nextInt();
+        } while (anio < 2020 || anio > 2026);
 
-        System.out.println("Módulo 9");
+        //=====================================
+        // Validación del mes
+        //=====================================
+        do{
+            System.out.println("Ingrese el mes a consultar (1-12):");
+            mes = sc.nextInt();
+        } while (mes < 1 || mes > 12);
+        double menorMonto = 0;
+        String nombreMunicipio = "";
+        boolean encontrado = false;
+
+        //===================================
+        // Busqueda del menor ingreso
+        //===================================
+        for (int i = 0; i < totalRegistros; i++) {
+            if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
+                double monto = Double.parseDouble(datos[i][MONTO]);
+                if (!encontrado || monto < menorMonto) {
+                    menorMonto = monto;
+                    nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
+                    encontrado = true;
+                }
+            }
+        }
+
+        //===================================
+        // Impresión de resultados
+        //===================================
+        if (encontrado) {
+            System.out.println("----------------------------------");
+            System.out.println("Municipio con menor ingreso");
+            System.out.println("----------------------------------");
+            System.out.println("Municipio: " + nombreMunicipio);
+            System.out.println("Monto: $" + menorMonto); 
+        } else {
+            System.out.println("No se encontraron registros para el periodo indicado");
+        }
     }
 
 
