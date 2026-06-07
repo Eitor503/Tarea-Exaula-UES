@@ -239,7 +239,8 @@ public class App {
     // 2. VALIDACIÓN DEL AÑO (Desde 2020)
     // =========================================
     int anio = 0;
-    while (true) { // Bucle infinito hasta que se ingrese un año válido ARREGLA ESO FÁTIMA
+    //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
+    while (true) { // Bucle infinito hasta que se ingrese un año válido 
         System.out.print("Ingrese año (desde el año 2020 por favor): "); 
         try { // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, 
         // se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente
@@ -257,7 +258,7 @@ public class App {
     // 3. VALIDACIÓN DEL MES (Entre 1 y 12)
     // =========================================
     int mes = 0;
-    while (true) {
+    while (true) { //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
         System.out.print("Ingrese mes (1 a 12 por favor): ");
         try {
             mes = Integer.parseInt(sc.nextLine().trim());
@@ -274,11 +275,11 @@ public class App {
     // 4. VALIDACIÓN DEL MONTO (Positivo)
     // =========================================
     double monto = 0.0;
-    while (true) { //ARREGLA ESO FÁTIMA
+    while (true) { //ARREGLA ESO, NO SE PERMITE WHILE(TRUE) BAJO NINGUNA CIRCUNSTANCIA
         System.out.print("Ingrese monto (positivo por favor): ");
         try {
             monto = Double.parseDouble(sc.nextLine().trim());
-            if (monto > 0) {
+            if (monto > 0) { //EL MONTO PUEDE SER 0, ARREGLA ESO
                 break; // Entrada válida
             } // Si el monto no es positivo, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo monto
             System.out.println("Error. El monto debe ser estrictamente mayor a 0.");
@@ -455,7 +456,7 @@ public class App {
 
     public static void reporteZonaAnioElegible() {
 
-        System.out.println("Módulo 6 Reporte por zona en año específico");
+    System.out.println("Módulo 6 Reporte por zona en año específico");
 
     // Validar si existen datos cargados en el sistema 
     if (totalRegistros == 0) { 
@@ -531,8 +532,7 @@ public class App {
         System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); // <-- CORREGIDO: Tenía el nombre viejo
     } 
     System.out.println("======================================================="); 
-}
-    
+    }
 
 
     // =========================================
@@ -574,32 +574,7 @@ public class App {
     // =========================================
 
     public static void municipioMayorIngreso() {
-        double[] montoMunicipio = new double[44];
-        String[] totalMunicipio = new String[44];
-        //---------------------------------------
-        // Acumular los ingresos por municipio
-        //---------------------------------------
-        for (int i = 0; i < totalRegistros; i++) {
-            int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
-            montoMunicipio[idMunicipio] = montoMunicipio[idMunicipio] + Double.parseDouble(datos[i][MONTO]);
-            municipio[idMunicipio] = datos[i][NOMBRE_MUNICIPIO];
-        }
-        // Buscar el municipio con el mayor ingreso
-        //----------------------------------------
-        int mayor = 0;
-        for (int i = 0; i< 44; i++) {
-            if (montoMunicipio[i] > montoMunicipio[mayor]){
-                mayor = i;
-            }
-        }
 
-        // Mostrar los resultados
-        System.out.println("Módulo 8");
-        System.out.println("-----------------------------------------------------");
-        system.out.println("MUNICIPIO CON MAYOR INGRESO");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Municipio: " + municipio[mayor]);
-        System.out.println("Monto Acumulado: $" + montoMunicipio[mayor]);
     }
 
 
@@ -610,59 +585,7 @@ public class App {
 
     public static void municipioMenorIngreso() {
 
-        // Variables en las que se almacenara el mes y el año a consultar
-        int anio;
-        int mes;
-        
-        //======================================
-        // Validación del año
-        //======================================
-        do {
-            system.out.println("Ingrese el año que desea consultar (2020-20269):");
-            anio = sc.nextInt();
-
-        } while (anio < 2020 || anio > 2026);
-
-        //=======================================
-        // Validación del mes
-        //=======================================
-        do {
-            system.out.println("Ingrese el mes a consultar (1-12):");
-            mes = sc.nextInt();
-        } while (mes < 1 || mes > 12);
-
-        double menorMonto = 0;
-        String nombreMunicipio = "";
-        boolean encontrado = false;
-
-        //=========================================
-        // Busqueda delmenor ingreso
-        //=========================================
-        for (int i = 0; i < totalRegistros; i++) {
-            if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
-                double monto = Double.parseDouble(datos[i][MONTO]);
-                if (!encontrado || monto < menorMonto) {
-                    menorMonto = monto;
-                    nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
-                    encontrado = true;
-                }
-            }       
-        
-
-        }
-        //========================
-        // Impresion de resultados
-        //========================
-        if (encontrado) {
-            system.out.prinln("Módulo 9");
-            system.out.println("=======================================================");
-            system.out.println("Municipio con menor ingreso");
-            system.out.println("=======================================================");
-            system.out.println("Municipio: " + nombreMunicipio);
-            system.out.println("Monto: $" + menorMonto);
-        } else {
-            system.out.println("No existen registros para el año y mes indicado.");
-        }  
+        System.out.println("Módulo 9");
     }
 
 
