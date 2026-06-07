@@ -431,9 +431,31 @@ public class App {
 
     public static void totalIngresosDesde2020() {
 
-        System.out.println("Módulo 7");
+    double totalIngresos = 0;
+
+    // Recorremos todos los registros cargados
+    for (int i = 0; i < totalRegistros; i++) {
+
+        // Validamos que exista información en la fila
+        if (datos[i][ANIO] == null) {
+            continue;
+        }
+
+        // Obtenemos año y monto
+        int anio = Integer.parseInt(datos[i][ANIO]);
+        double monto = Double.parseDouble(datos[i][MONTO]);
+
+        // Se suman únicamente registros desde 2020
+        if (anio >= 2020) {
+            totalIngresos += monto;
+        }
     }
 
+    System.out.println("----------------------------------");
+    System.out.println("TOTAL DE INGRESOS DESDE 2020");
+    System.out.println("----------------------------------");
+    System.out.printf("Total recaudado: $%.2f\n", totalIngresos);
+}
 
     // =========================================
     // MÓDULO 8
