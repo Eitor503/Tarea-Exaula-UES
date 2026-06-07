@@ -69,6 +69,7 @@ public class App {
 
             System.out.print("Seleccione una opción: ");
             opcion = Integer.parseInt(sc.nextLine());
+            System.out.println();
 
             switch(opcion) {
 
@@ -238,7 +239,7 @@ public class App {
     // 2. VALIDACIÓN DEL AÑO (Desde 2020)
     // =========================================
     int anio = 0;
-    while (true) { // Bucle infinito hasta que se ingrese un año válido
+    while (true) { // Bucle infinito hasta que se ingrese un año válido ARREGLA ESO FÁTIMA
         System.out.print("Ingrese año (desde el año 2020 por favor): "); 
         try { // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, 
         // se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente
@@ -273,7 +274,7 @@ public class App {
     // 4. VALIDACIÓN DEL MONTO (Positivo)
     // =========================================
     double monto = 0.0;
-    while (true) {
+    while (true) { //ARREGLA ESO FÁTIMA
         System.out.print("Ingrese monto (positivo por favor): ");
         try {
             monto = Double.parseDouble(sc.nextLine().trim());
@@ -303,7 +304,7 @@ public class App {
     totalRegistros++; // Ahora totalRegistros apunta a la siguiente fila disponible, es decir, el número total de registros cargados en la matriz
 
     System.out.println("\n¡Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
-   
+
 }
 
 
@@ -541,9 +542,31 @@ public class App {
 
     public static void totalIngresosDesde2020() {
 
-        System.out.println("Módulo 7");
+    double totalIngresos = 0;
+
+    // Recorremos todos los registros cargados
+    for (int i = 0; i < totalRegistros; i++) {
+
+        // Validamos que exista información en la fila
+        if (datos[i][ANIO] == null) {
+            continue;
+        }
+
+        // Obtenemos año y monto
+        int anio = Integer.parseInt(datos[i][ANIO]);
+        double monto = Double.parseDouble(datos[i][MONTO]);
+
+        // Se suman únicamente registros desde 2020
+        if (anio >= 2020) {
+            totalIngresos += monto;
+        }
     }
 
+    System.out.println("----------------------------------");
+    System.out.println("TOTAL DE INGRESOS DESDE 2020");
+    System.out.println("----------------------------------");
+    System.out.printf("Total recaudado: $%.2f\n", totalIngresos);
+}
 
     // =========================================
     // MÓDULO 8
@@ -551,8 +574,32 @@ public class App {
     // =========================================
 
     public static void municipioMayorIngreso() {
+        double[] montoMunicipio = new double[44];
+        String[] totalMunicipio = new String[44];
+        //---------------------------------------
+        // Acumular los ingresos por municipio
+        //---------------------------------------
+        for (int i = 0; i < totalRegistros; i++) {
+            int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
+            montoMunicipio[idMunicipio] = montoMunicipio[idMunicipio] + Double.parseDouble(datos[i][MONTO]);
+            municipio[idMunicipio] = datos[i][NOMBRE_MUNICIPIO];
+        }
+        // Buscar el municipio con el mayor ingreso
+        //----------------------------------------
+        int mayor = 0;
+        for (int i = 0; i< 44; i++) {
+            if (montoMunicipio[i] > montoMunicipio[mayor]){
+                mayor = i;
+            }
+        }
 
+        // Mostrar los resultados
         System.out.println("Módulo 8");
+        System.out.println("-----------------------------------------------------");
+        system.out.println("MUNICIPIO CON MAYOR INGRESO");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Municipio: " + municipio[mayor]);
+        System.out.println("Monto Acumulado: $" + montoMunicipio[mayor]);
     }
 
 
@@ -563,7 +610,59 @@ public class App {
 
     public static void municipioMenorIngreso() {
 
-        System.out.println("Módulo 9");
+        // Variables en las que se almacenara el mes y el año a consultar
+        int anio;
+        int mes;
+        
+        //======================================
+        // Validación del año
+        //======================================
+        do {
+            system.out.println("Ingrese el año que desea consultar (2020-20269):");
+            anio = sc.nextInt();
+
+        } while (anio < 2020 || anio > 2026);
+
+        //=======================================
+        // Validación del mes
+        //=======================================
+        do {
+            system.out.println("Ingrese el mes a consultar (1-12):");
+            mes = sc.nextInt();
+        } while (mes < 1 || mes > 12);
+
+        double menorMonto = 0;
+        String nombreMunicipio = "";
+        boolean encontrado = false;
+
+        //=========================================
+        // Busqueda delmenor ingreso
+        //=========================================
+        for (int i = 0; i < totalRegistros; i++) {
+            if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
+                double monto = Double.parseDouble(datos[i][MONTO]);
+                if (!encontrado || monto < menorMonto) {
+                    menorMonto = monto;
+                    nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
+                    encontrado = true;
+                }
+            }       
+        
+
+        }
+        //========================
+        // Impresion de resultados
+        //========================
+        if (encontrado) {
+            system.out.prinln("Módulo 9");
+            system.out.println("=======================================================");
+            system.out.println("Municipio con menor ingreso");
+            system.out.println("=======================================================");
+            system.out.println("Municipio: " + nombreMunicipio);
+            system.out.println("Monto: $" + menorMonto);
+        } else {
+            system.out.println("No existen registros para el año y mes indicado.");
+        }  
     }
 
 
