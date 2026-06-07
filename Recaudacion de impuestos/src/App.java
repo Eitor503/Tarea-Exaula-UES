@@ -259,7 +259,7 @@ public class App {
         double[] montoMunicipio = new double[44];
         String[] totalMunicipio = new String[44];
         //---------------------------------------
-        // Acumular los ingresos por mnicipio
+        // Acumular los ingresos por municipio
         //---------------------------------------
         for (int i = 0; i < totalRegistros; i++) {
             int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
@@ -292,7 +292,59 @@ public class App {
 
     public static void municipioMenorIngreso() {
 
-        System.out.println("Módulo 9");
+        // Variables en las que se almacenara el mes y el año a consultar
+        int anio;
+        int mes;
+        
+        //======================================
+        // Validación del año
+        //======================================
+        do {
+            system.out.println("Ingrese el año que desea consultar (2020-20269):");
+            anio = sc.nextInt();
+
+        } while (anio < 2020 || anio > 2026);
+
+        //=======================================
+        // Validación del mes
+        //=======================================
+        do {
+            system.out.println("Ingrese el mes a consultar (1-12):");
+            mes = sc.nextInt();
+        } while (mes < 1 || mes > 12);
+
+        double menorMonto = 0;
+        String nombreMunicipio = "";
+        boolean encontrado = false;
+
+        //=========================================
+        // Busqueda delmenor ingreso
+        //=========================================
+        for (int i = 0; i < totalRegistros; i++) {
+            if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
+                double monto = Double.parseDouble(datos[i][MONTO]);
+                if (!encontrado || monto < menorMonto) {
+                    menorMonto = monto;
+                    nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
+                    encontrado = true;
+                }
+            }       
+        
+
+        }
+        //========================
+        // Impresion de resultados
+        //========================
+        if (encontrado) {
+            system.out.prinln("Módulo 9");
+            system.out.println("=======================================================");
+            system.out.println("Municipio con menor ingreso");
+            system.out.println("=======================================================");
+            system.out.println("Municipio: " + nombreMunicipio);
+            system.out.println("Monto: $" + menorMonto);
+        } else {
+            system.out.println("No existen registros para el año y mes indicado.");
+        }  
     }
 
 
