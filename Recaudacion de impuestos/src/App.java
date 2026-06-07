@@ -263,7 +263,7 @@ public class App {
             if (mes >= 1 && mes <= 12) {
                 break; // Entrada válida
             }
-            System.out.println("Error, el mes debe estar entre 1 y 12. Por favo intentar de nuevo.");
+            System.out.println("Error, el mes debe estar entre 1 y 12. Por favor intentar de nuevo.");
         } catch (NumberFormatException e) {
             System.out.println("Erro, Ingrese un número entero válido.");
         }
@@ -302,7 +302,7 @@ public class App {
     // Incrementamos el control de registros de la matriz para apuntar a la siguiente fila disponible para el próximo registro
     totalRegistros++; // Ahora totalRegistros apunta a la siguiente fila disponible, es decir, el número total de registros cargados en la matriz
 
-    System.out.println("\n¡ Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
+    System.out.println("\n¡Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
    
 }
 
@@ -314,8 +314,42 @@ public class App {
 
     public static void guardarDatosCSV() {
 
-        System.out.println("Módulo 3");
+        System.out.println("Módulo 3 Guardar datos de nuevos municipios en CSV");
+// 1. Validar que la matriz no esté completamente vacía antes de intentar guardar, para evitar crear un archivo con líneas vacías o sin datos importantes. Si totalRegistros es 0, significa que no hay datos cargados en la matriz, por lo que no tiene sentido intentar guardar un archivo CSV.
+    if (totalRegistros == 0) {
+        System.out.println("No hay datos en la matriz para guardar.");
+        return; // Salimos del método para evitar crear un archivo vacío
     }
+
+    String nombreArchivo = "Impuestos.csv";
+
+    // 2. Abrimos el archivo en modo APPEND (true) es decir en el  modo SOBREESCRITURA, para añadir al final sin borrar nada
+    try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.FileWriter(nombreArchivo, true))) {
+        
+        // 3. Tomamos la posición del ÚLTIMO registro ingresado en la memoria
+        // Como totalRegistros ya aumentó en registrarDatos(), el último está en (totalRegistros - 1)
+        int ultimoIndice = totalRegistros - 1; // El índice del último registro ingresado en la matriz
+
+        // Construimos la línea de texto con el formato CSV usando las constantes
+        String lineaCsv = datos[ultimoIndice][ANIO] + "," +
+                          datos[ultimoIndice][MES] + "," +
+                          datos[ultimoIndice][ZONA] + "," +
+                          datos[ultimoIndice][DEPARTAMENTO] + "," +
+                          datos[ultimoIndice][ID_MUNICIPIO] + "," +
+                          datos[ultimoIndice][NOMBRE_MUNICIPIO] + "," +
+                          datos[ultimoIndice][MONTO];
+        // 4. Escribimos esta línea al final del archivo físico, gracias a que abrimos el archivo en modo APPEND, 
+        // no se borrará nada de lo que ya estaba y se añadirá esta nueva línea al final del archivo
+        // Escribimos únicamente este registro nuevo al final del archivo físico
+        escritor.println(lineaCsv);
+
+        System.out.println("El nuevo registro se ha agregado de forma exitosa permanente al archivo CSV.");
+
+    } catch (Exception e) {
+        System.out.println("Error. No fue posible agregar la información al archivo CSV.");
+        e.printStackTrace();
+    }
+}
 
 
     // =========================================
