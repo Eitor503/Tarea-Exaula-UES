@@ -256,8 +256,31 @@ public class App {
     // =========================================
 
     public static void municipioMayorIngreso() {
+        String[] municipios = new String[44];
+        double[] totalMunicipio = new double[44];
+        //---------------------------------------
+        // Acumular los ingresos por mnicipio
+        for (int i = 0; i < totalRegistros; i++) {
+            int id = Integer.parseInt(datos[i][ID_MUNICIPIO]) -1;
+            totalMunicipio[id] = totalMunicipio[id] + Double.parseDouble(datos[i][ID_MUNICIPIO]);
+            nombreMunicipio[id] = datos[i][NOMBRE-MUNICIPIO];
+        
+        }
+        // Buscar el municipio con elmayor ingreso
+        int mayor = 0;
+        for (int i = 0; i< 44; i++) {
+            if (totalMunicipio[i] > totalMunicipio[mayor]){
+                mayor = i;
+            }
+        }
 
+        // Mostrar los resultados
         System.out.println("Módulo 8");
+        System.out.println("-----------------------------------------------------");
+        system.out.println("MUNICIPIO CON MAYOR INGRESO");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Municipio: " + nombreMunicipio[mayor]);
+        System.out.println("Monto Acumulado: " + totalMunicipio[mayor]);
     }
 
 
