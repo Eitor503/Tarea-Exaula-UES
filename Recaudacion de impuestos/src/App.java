@@ -68,7 +68,7 @@ public class App {
         System.out.println("-------------------------------------------");
 
             System.out.print("Seleccione una opción: ");
-            opcion = sc.nextInt();
+            opcion = Integer.parseInt(sc.nextLine());
 
             switch(opcion) {
 
@@ -124,7 +124,8 @@ public class App {
                     System.out.println("Opción inválida.");
             }
 
-            System.out.println();
+            System.out.printf("Presione cualquier tecla para continuar...");
+            sc.nextLine();
 
         } while(opcion != 12);
 
@@ -171,6 +172,7 @@ public class App {
                 }
 
                 i++;
+                totalRegistros++;
             }
             }
 
@@ -186,13 +188,123 @@ public class App {
 
     // =========================================
     // MÓDULO 2
-    // Responsable: Fátima
+    // Responsable: Fatima
     
     public static void registrarDatos() {
+        System.out.println("Módulo 2 - Registrar datos de nuevos municipios");
 
+//Validación de que no se exceda el límite de los 500 registros
+        if (totalRegistros >= datos.length) {
+            System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros.");
+            return;
+        }
 
-        System.out.println("Módulo 2 - Registrar datossdfsdsdfadfdafdsfsd");
+        // =========================================
+    // 1. INGRESO Y VALIDACIÓN DEL ID AUTO-COMPLETADO
+    // =========================================
+    String idInput = "";
+    int indiceEncontrado = -1;
+    // El bucle se repetirá hasta que el usuario ingrese un ID que exista en los registros de referencia
+    while (indiceEncontrado == -1) { // Mientras no se haya encontrado un índice válido para el ID ingresado, seguimos pidiendo al usuario que ingrese un ID
+        System.out.print("Ingrese ID del municipio: ");
+        idInput = sc.nextLine().trim();
+
+        // Búsqueda secuencial manual en los registros ya existentes
+        for (int i = 0; i < totalRegistros; i++) { // Recorremos sólo hasta el total de registros cargados, no toda la matriz
+            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) { // Validamos que el ID no sea nulo y que coincida con el ingresado
+                indiceEncontrado = i; // Guardamos el índice donde hallamos este ID
+                break;
+            }
+        }
+// Si después de recorrer los registros no se encontró el ID, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo ID
+        if (indiceEncontrado == -1) {
+            System.out.println("Error, el ID ingresado no existe en los registros. Intente de nuevo por favor.");
+        }
     }
+
+    // Extraemos de forma automática los campos correspondientes gracias al índice hallado es decir como el autocompletado que se pidió en el punto anterior, 
+    // para evitar errores de tipeo y agilizar el proceso de registro
+    String zonaAuto = datos[indiceEncontrado][ZONA];
+    String deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
+    String municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO];
+
+    System.out.println("-> [Autocompletado] Zona: " + zonaAuto);
+    System.out.println("-> [Autocompletado] Departamento: " + deptoAuto);
+    System.out.println("-> [Autocompletado] Municipio: " + municipioAuto);
+
+    //Para la validacion de los siguientes campos, se uso la misma estructura igual para año, mes y el monto, se han implementado validaciones generales 
+    // para asegurar que los datos ingresados sean del tipo y formato correcto.
+    // =========================================
+    // 2. VALIDACIÓN DEL AÑO (Desde 2020)
+    // =========================================
+    int anio = 0;
+    while (true) { // Bucle infinito hasta que se ingrese un año válido
+        System.out.print("Ingrese año (desde el año 2020 por favor): "); 
+        try { // Intentamos convertir la entrada a un número entero, si el usuario ingresa algo que no es un número, 
+        // se lanzará una excepción para mostrar un mensaje de error y pedir la entrada nuevamente
+            anio = Integer.parseInt(sc.nextLine().trim());
+            if (anio >= 2020) {
+                break; // Entrada válida, rompemos el bucle
+            } // Si el año es menor a 2020, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo año
+            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error, por favor Ingrese un número entero válido.");
+        }
+    }
+
+    // =========================================
+    // 3. VALIDACIÓN DEL MES (Entre 1 y 12)
+    // =========================================
+    int mes = 0;
+    while (true) {
+        System.out.print("Ingrese mes (1 a 12 por favor): ");
+        try {
+            mes = Integer.parseInt(sc.nextLine().trim());
+            if (mes >= 1 && mes <= 12) {
+                break; // Entrada válida
+            }
+            System.out.println("Error, el mes debe estar entre 1 y 12. Por favor intentar de nuevo.");
+        } catch (NumberFormatException e) {
+            System.out.println("Erro, Ingrese un número entero válido.");
+        }
+    }
+
+    // =========================================
+    // 4. VALIDACIÓN DEL MONTO (Positivo)
+    // =========================================
+    double monto = 0.0;
+    while (true) {
+        System.out.print("Ingrese monto (positivo por favor): ");
+        try {
+            monto = Double.parseDouble(sc.nextLine().trim());
+            if (monto > 0) {
+                break; // Entrada válida
+            } // Si el monto no es positivo, mostramos un mensaje de error y el bucle se repetirá para pedir un nuevo monto
+            System.out.println("Error. El monto debe ser estrictamente mayor a 0.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error. Ingrese un valor numérico decimal válido.");
+        }
+    }
+
+    // =========================================
+    // 5. GUARDAR NUEVO REGISTRO EN LA MATRIZ PRINCIPAL
+    // =========================================
+    // Una vez validados todos los datos, los guardamos en la siguiente fila disponible de la matriz principal utilizando el control de registros 
+    // totalRegistros para saber dónde está la siguiente posición/fila disponible
+    datos[totalRegistros][ANIO] = String.valueOf(anio);
+    datos[totalRegistros][MES] = String.valueOf(mes);
+    datos[totalRegistros][ZONA] = zonaAuto;
+    datos[totalRegistros][DEPARTAMENTO] = deptoAuto;
+    datos[totalRegistros][ID_MUNICIPIO] = idInput;
+    datos[totalRegistros][NOMBRE_MUNICIPIO] = municipioAuto;
+    datos[totalRegistros][MONTO] = String.valueOf(monto);
+
+    // Incrementamos el control de registros de la matriz para apuntar a la siguiente fila disponible para el próximo registro
+    totalRegistros++; // Ahora totalRegistros apunta a la siguiente fila disponible, es decir, el número total de registros cargados en la matriz
+
+    System.out.println("\n¡Registro exitoso! Datos validados correctamente y almacenados en la matriz.");
+   
+}
 
 
     // =========================================
@@ -202,8 +314,42 @@ public class App {
 
     public static void guardarDatosCSV() {
 
-        System.out.println("Módulo 3");
+        System.out.println("Módulo 3 Guardar datos de nuevos municipios en CSV");
+// 1. Validar que la matriz no esté completamente vacía antes de intentar guardar, para evitar crear un archivo con líneas vacías o sin datos importantes. Si totalRegistros es 0, significa que no hay datos cargados en la matriz, por lo que no tiene sentido intentar guardar un archivo CSV.
+    if (totalRegistros == 0) {
+        System.out.println("No hay datos en la matriz para guardar.");
+        return; // Salimos del método para evitar crear un archivo vacío
     }
+
+    String nombreArchivo = "Impuestos.csv";
+
+    // 2. Abrimos el archivo en modo APPEND (true) es decir en el  modo SOBREESCRITURA, para añadir al final sin borrar nada
+    try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.FileWriter(nombreArchivo, true))) {
+        
+        // 3. Tomamos la posición del ÚLTIMO registro ingresado en la memoria
+        // Como totalRegistros ya aumentó en registrarDatos(), el último está en (totalRegistros - 1)
+        int ultimoIndice = totalRegistros - 1; // El índice del último registro ingresado en la matriz
+
+        // Construimos la línea de texto con el formato CSV usando las constantes
+        String lineaCsv = datos[ultimoIndice][ANIO] + "," +
+                          datos[ultimoIndice][MES] + "," +
+                          datos[ultimoIndice][ZONA] + "," +
+                          datos[ultimoIndice][DEPARTAMENTO] + "," +
+                          datos[ultimoIndice][ID_MUNICIPIO] + "," +
+                          datos[ultimoIndice][NOMBRE_MUNICIPIO] + "," +
+                          datos[ultimoIndice][MONTO];
+        // 4. Escribimos esta línea al final del archivo físico, gracias a que abrimos el archivo en modo APPEND, 
+        // no se borrará nada de lo que ya estaba y se añadirá esta nueva línea al final del archivo
+        // Escribimos únicamente este registro nuevo al final del archivo físico
+        escritor.println(lineaCsv);
+
+        System.out.println("El nuevo registro se ha agregado de forma exitosa permanente al archivo CSV.");
+
+    } catch (Exception e) {
+        System.out.println("Error. No fue posible agregar la información al archivo CSV.");
+        e.printStackTrace();
+    }
+}
 
 
     // =========================================
@@ -213,7 +359,80 @@ public class App {
 
     public static void reporteZonaAnual() {
 
-        System.out.println("Módulo 4");
+        // Matriz divida en tres secciones
+        // 0 año
+        // 1 total occidental
+        // 2 total oriental
+        // 3 total paracentral/central
+        String[][] reporte = {
+
+        {"2020", "0", "0", "0"},
+        {"2021", "0", "0", "0"},
+        {"2022", "0", "0", "0"},
+        {"2023", "0", "0", "0"},
+        {"2024", "0", "0", "0"},
+        {"2025", "0", "0", "0"},
+        {"2026", "0", "0", "0"}
+    };
+
+        
+        // Recorro cada fila de la matriz reporte
+        for (int i = 0; i < reporte.length; i++){
+            // Obtenemos el año y el valor de cada recaudación por zona
+            int anio = Integer.parseInt(reporte[i][0]);
+            double recaudacionOccidental = Double.parseDouble(reporte[i][1]);
+            double recaudacionOriental = Double.parseDouble(reporte[i][2]); 
+            double recaudacionCentral = Double.parseDouble(reporte[i][3]);
+
+            // Ahora recorremos la matriz principal para comparar datos
+            for (int j = 0; j < totalRegistros; j++){
+
+                if ( datos[j][ANIO] == null){
+                    continue; // Por si acaso hay algún dato vacío colado, nos saltamos esa línea
+                }
+                // Obtenemos el año de la fila de la matriz principal
+                int aniodatos = Integer.parseInt(datos[j][ANIO]);
+
+                // Validamos que el año filtrado sea el deseado
+                if (aniodatos == anio){
+                    
+                    // Obtenemos la zona a filtrar y el monto
+                    String zona_filtrar = datos[j][ZONA];
+                    double monto_filtrar = Double.parseDouble(datos[j][MONTO]);
+
+                    // Validamos de qué zona es la fila y la guardamos en el monto
+                    // correspondiente
+                    if (zona_filtrar.equals("Occidente")){
+                        recaudacionOccidental += monto_filtrar;
+                    }
+
+                    else if (zona_filtrar.equals("Oriente")){
+                        recaudacionOriental += monto_filtrar;
+                    }
+
+                    else {
+                        recaudacionCentral += monto_filtrar;
+                    }
+
+                }
+            }
+
+            // Guardamos los valores que obtuvimos
+            reporte[i][1] = String.format("%.2f", recaudacionOccidental);
+            reporte[i][2] = String.format("%.2f",recaudacionOriental);
+            reporte[i][3] = String.format("%.2f",recaudacionCentral);
+
+        }
+
+        // Mostramos los datos ordenados al final
+        System.out.println("AÑO\tOCCIDENTAL\tORIENTAL\tCENTRAL/PARACENTRAL");
+        for(int i = 0; i < reporte.length; i++) {
+
+            System.out.print(reporte[i][0] + "\t");
+            System.out.print("$" + reporte[i][1] + "\t");
+            System.out.print("$" + reporte[i][2] + "\t");
+            System.out.println("$" + reporte[i][3]);
+        }
     }
 
 
@@ -246,9 +465,31 @@ public class App {
 
     public static void totalIngresosDesde2020() {
 
-        System.out.println("Módulo 7");
+    double totalIngresos = 0;
+
+    // Recorremos todos los registros cargados
+    for (int i = 0; i < totalRegistros; i++) {
+
+        // Validamos que exista información en la fila
+        if (datos[i][ANIO] == null) {
+            continue;
+        }
+
+        // Obtenemos año y monto
+        int anio = Integer.parseInt(datos[i][ANIO]);
+        double monto = Double.parseDouble(datos[i][MONTO]);
+
+        // Se suman únicamente registros desde 2020
+        if (anio >= 2020) {
+            totalIngresos += monto;
+        }
     }
 
+    System.out.println("----------------------------------");
+    System.out.println("TOTAL DE INGRESOS DESDE 2020");
+    System.out.println("----------------------------------");
+    System.out.printf("Total recaudado: $%.2f\n", totalIngresos);
+}
 
     // =========================================
     // MÓDULO 8
