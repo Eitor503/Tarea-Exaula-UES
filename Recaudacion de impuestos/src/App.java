@@ -437,7 +437,101 @@ static int totalNuevos = 0;
 
     public static void reporteMunicipioAnual() {
 
-        System.out.println("Módulo 5");
+        // Hacemos una matriz auxiliar que va a contener todos los valores
+        // Guardados en la siguiente estructura
+        // 0 = Año
+        // 1 = Municipio
+        // 2 = Monto total recaudado
+    String[][] reporte = new String[500][3];
+
+    int filasReporte = 0; // Variable que controla la cantidad de filas que tenga el reporte
+
+    // Recorremos la matriz principal fila por fila
+    for(int i = 0; i < totalRegistros; i++) {
+
+        // Obtenemos los valores que queremos evaluar de cada fila
+        String anio = datos[i][0];
+        String municipio = datos[i][5];
+        double monto = Double.parseDouble(datos[i][6]);
+
+        boolean encontrado = false; // variable para determinar si la combinación está
+
+        // Buscar si ya existe la combinación en la lista auxiliar
+        // del año y municipio de los datos, y si sí, sumarlos a los que ya están añadidos
+        // si no, crear una nueva fila
+        for(int j = 0; j < filasReporte; j++) {
+
+            if(reporte[j][0].equals(anio) && reporte[j][1].equals(municipio)) {
+
+                double totalActual = Double.parseDouble(reporte[j][2]);
+
+                totalActual += monto;
+
+                reporte[j][2] = String.valueOf(totalActual);
+
+                encontrado = true;
+
+                break; // Si ya encontró la combinación, romper el bucle y buscar
+                        // con la otra combinación
+            }
+        }
+
+        // Si no existe, crear nueva fila
+        if(!encontrado) {
+
+            reporte[filasReporte][0] = anio;
+            reporte[filasReporte][1] = municipio;
+            reporte[filasReporte][2] = String.valueOf(monto);
+
+            filasReporte++;
+        }
+    }
+
+
+    // Hacemos ordenamiento Bubble Sort en los datos
+    // obtenidos para mejor presentación
+    for(int i = 0; i < filasReporte - 1; i++) {
+
+        for(int j = 0; j < filasReporte - 1 - i; j++) {
+
+            int anioActual =
+                    Integer.parseInt(reporte[j][0]);
+
+            int anioSiguiente =
+                    Integer.parseInt(reporte[j + 1][0]);
+
+            if(anioActual > anioSiguiente) {
+
+                for(int k = 0; k < 3; k++) {
+
+                    String temp = reporte[j][k];
+
+                    reporte[j][k] =
+                            reporte[j + 1][k];
+
+                    reporte[j + 1][k] =
+                            temp;
+                }
+            }
+        }
+    }
+
+    // Mostramos los datos en una tabla final con la matriz auxiliar
+    System.out.println("TABLA FINAL");
+    System.out.println("AÑO\tMUNICIPIO\tTOTAL");
+
+    // Bucle obtener cada valor de la matriz
+    for(int i = 0; i < filasReporte; i++) {
+
+        double total =
+                Double.parseDouble(reporte[i][2]);
+
+        System.out.println(
+                reporte[i][0] + "\t" +
+                reporte[i][1] + "\t" +
+                String.format("%.2f", total)
+        );
+    }
     }
 
 
