@@ -195,6 +195,37 @@ static int totalNuevos = 0;
 
 public static void registrarDatos() {
         System.out.println("Módulo 2 - Registrar nuevos municipios");
+    // =========================================================================================
+    // CUADRO DE LOS 44 MUNICIPIOS DE EL SALVADOR POR ZONAS
+    // =========================================================================================
+    System.out.println("+--------------------------------------+--------------------------------------+--------------------------------------+");
+    System.out.println("| ID | ZONA OCCIDENTAL (11)            |ID  | ZONA CENTRAL Y PARACENTRAL (23) | ID | ZONA ORIENTAL (10)              |");
+    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+");
+    System.out.println("|  1 | Ahuachapán Norte                | 12 | Chalatenango Norte              | 35 | Usulután Norte                  |");
+    System.out.println("|  2 | Ahuachapán Centro               | 13 | Chalatenango Centro             | 36 | Usulután Este                   |");
+    System.out.println("|  3 | Ahuachapán Sur                  | 14 | Chalatenango Sur                | 37 | Usulután Oeste                  |");
+    System.out.println("|  4 | Santa Ana Norte                 | 15 | La Libertad Norte               | 38 | San Miguel Norte                |");
+    System.out.println("|  5 | Santa Ana Centro                | 16 | La Libertad Centro              | 39 | San Miguel Centro               |");
+    System.out.println("|  6 | Santa Ana Este                  | 17 | La Libertad Oeste               | 40 | San Miguel Oeste                |");
+    System.out.println("|  7 | Santa Ana Oeste                 | 18 | La Libertad Este                | 41 | Morazán Norte                   |");
+    System.out.println("|  8 | Sonsonate Norte                 | 19 | La Libertad Sur                 | 42 | Morazán Sur                     |");
+    System.out.println("|  9 | Sonsonate Centro                | 20 | La Libertad Costa               | 43 | La Unión Norte                  |");
+    System.out.println("| 10 | Sonsonate Este                  | 21 | San Salvador Norte              | 44 | La Unión Sur                    |");
+    System.out.println("| 11 | Sonsonate Oeste                 | 22 | San Salvador Oeste              |    |                                 |");
+    System.out.println("|    |                                 | 23 | San Salvador Centro             |    |                                 |");
+    System.out.println("|    |                                 | 24 | San Salvador Este               |    |                                 |");
+    System.out.println("|    |                                 | 25 | San Salvador Sur                |    |                                 |");
+    System.out.println("|    |                                 | 26 | Cuscatlán Norte                 |    |                                 |");
+    System.out.println("|    |                                 | 27 | Cuscatlán Sur                   |    |                                 |");
+    System.out.println("|    |                                 | 28 | La Paz Oeste                    |    |                                 |");
+    System.out.println("|    |                                 | 29 | La Paz Centro                   |    |                                 |");
+    System.out.println("|    |                                 | 30 | La Paz Este                     |    |                                 |");
+    System.out.println("|    |                                 | 31 | Cabañas Este                    |    |                                 |");
+    System.out.println("|    |                                 | 32 | Cabañas Oeste                   |    |                                 |");
+    System.out.println("|    |                                 | 33 | San Vicente Norte               |    |                                 |");
+    System.out.println("|    |                                 | 34 | San Vicente Sur                 |    |                                 |");
+    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+");
+    System.out.println();
     {
     if (totalRegistros >= datos.length) {
         System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros.");
@@ -246,7 +277,7 @@ public static void registrarDatos() {
             if (anio >= 2020 && anio <= 2026) {
                 anioValido = true;
             } else {
-                System.out.println("Error. el año debe ser desde 2022 hasta el año actual.");
+                System.out.println("Error. el año debe ser desde 2020 hasta el año actual.");
             }
         } catch (NumberFormatException e) {
             System.out.println("Error. Ingrese un número entero válido.");
