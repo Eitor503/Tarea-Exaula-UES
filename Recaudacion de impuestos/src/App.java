@@ -193,7 +193,7 @@ public class App {
 static String[][] nuevosRegistros = new String[500][7]; 
 static int totalNuevos = 0;
 
- public static void registrarDatos() {
+public static void registrarDatos() {
         System.out.println("Módulo 2 - Registrar nuevos municipios");
     {
     if (totalRegistros >= datos.length) {
@@ -240,13 +240,13 @@ static int totalNuevos = 0;
     int anio = 0;
     boolean anioValido = false;
     while (!anioValido) {
-        System.out.print("Ingrese año (desde 2020): ");
+        System.out.print("Ingrese año (desde 2020-fecha actual): ");
         try {
             anio = Integer.parseInt(sc.nextLine().trim());
-            if (anio >= 2020) {
+            if (anio >= 2020 && anio <= 2026) {
                 anioValido = true;
             } else {
-                System.out.println("Error. El año debe ser igual o mayor a 2020.");
+                System.out.println("Error. el año debe ser desde 2022 hasta el año actual.");
             }
         } catch (NumberFormatException e) {
             System.out.println("Error. Ingrese un número entero válido.");
@@ -315,7 +315,7 @@ static int totalNuevos = 0;
     // =========================================
     public static void guardarDatosCSV() {
     if (totalNuevos == 0) {
-        System.out.println("Estimado usuario, usted no ha validado la información de ningún nuevo registro en el Módulo 2. Por favor, ingrese al Módulo 2 y registre al menos un nuevo municipio para luego poder guardar esa información de forma permanente en el archivo CSV. Gracias por su comprensión.");
+        System.out.println("ERROR, aún no se han registrado datos en el sistema.");
         return;
     }
 
@@ -326,12 +326,12 @@ static int totalNuevos = 0;
         
         for (int i = 0; i < totalNuevos; i++) {
             String lineaCsv = nuevosRegistros[i][ANIO] + "," +
-                              nuevosRegistros[i][MES] + "," +
-                              nuevosRegistros[i][ZONA] + "," +
-                              nuevosRegistros[i][DEPARTAMENTO] + "," +
-                              nuevosRegistros[i][ID_MUNICIPIO] + "," +
-                              nuevosRegistros[i][NOMBRE_MUNICIPIO] + "," +
-                              nuevosRegistros[i][MONTO];
+                            nuevosRegistros[i][MES] + "," +
+                            nuevosRegistros[i][ZONA] + "," +
+                            nuevosRegistros[i][DEPARTAMENTO] + "," +
+                            nuevosRegistros[i][ID_MUNICIPIO] + "," +
+                            nuevosRegistros[i][NOMBRE_MUNICIPIO] + "," +
+                            nuevosRegistros[i][MONTO];
             
             // Escribimos cada uno de los nuevos registros al final del archivo físico
             escritor.println(lineaCsv);
@@ -667,10 +667,10 @@ System.out.println("=======================================================");
             }
            // Mostrar resultados 
     System.out.println("-------------------------------------");
-      System.out.println("Municipio con mayor ingreso");
+    System.out.println("Municipio con mayor ingreso");
     System.out.println("-------------------------------------");
-      System.out.println("Municipio: " + municipio[mayor]);
-      System.out.println("Monto acumulado: $" + montoMunicipio[mayor]);
+    System.out.println("Municipio: " + municipio[mayor]);
+    System.out.println("Monto acumulado: $" + montoMunicipio[mayor]);
     }
     
     // =========================================
@@ -687,7 +687,7 @@ System.out.println("=======================================================");
         // ====================================
         do {
             System.out.println("Ingrese el año a consultar (2020-2026):");
-            anio = sc.nextInt();
+            anio = Integer.parseInt(sc.nextLine());
         } while (anio < 2020 || anio > 2026);
 
         //=====================================
@@ -695,7 +695,7 @@ System.out.println("=======================================================");
         //=====================================
         do{
             System.out.println("Ingrese el mes a consultar (1-12):");
-            mes = sc.nextInt();
+            mes = Integer.parseInt(sc.nextLine());
         } while (mes < 1 || mes > 12);
         double menorMonto = 0;
         String nombreMunicipio = "";
@@ -845,18 +845,27 @@ System.out.println("=======================================================");
         //Mostrar datos desordenados
         //=======================================
         System.out.println("---------------------------------------");
-           System.out.println("Datos desordenados:");
+        System.out.println("Datos desordenados:");
         System.out.println("-------------------------------------");
-              for (int i = 0; i < totalRegistros; i++) {
-                for(int j = 0; j < 7; j++) {
-                    System.out.println(datos[i][j] + "\t");
-                }
-                System.out.println();
-              }
+        System.out.println("AÑO\tMES\tZONA\tDEPARTAMENTO\tID MUNICIPIO\tMUNICIPIO\tMONTO");
+        for (int i = 0; i < totalRegistros; i++) {
+            String montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
+            System.out.println(
+                    datos[i][ANIO] + "\t" +
+                    datos[i][MES] + "\t" +
+                    datos[i][ZONA] + "\t" +
+                    datos[i][DEPARTAMENTO] + "\t" +
+                    datos[i][ID_MUNICIPIO] + "\t" +
+                    datos[i][NOMBRE_MUNICIPIO] + "\t" +
+                    "$" + montoFormateado
+            );
+        }
+        System.out.printf("Presione ENTER para ver la tabla ordenada...");
+        sc.nextLine();
               //====================================
               // Ordenamiento de Bubble Sort
               //====================================
-              for (int i = 0; i < totalRegistros -1; i++) {
+            for (int i = 0; i < totalRegistros -1; i++) {
                 for (int j = 0; j < totalRegistros -1 -i; j++) {
                     if (Double.parseDouble(datos[j][MONTO]) > Double.parseDouble(datos[j+1][MONTO])) {
 
@@ -868,19 +877,26 @@ System.out.println("=======================================================");
                         }
                     }
                 }
-              }
-              //=====================================
-              //Mostrar datos ordenados
-              //=====================================
-System.out.println("--------------------------------------");
-   System.out.println("Datos ordenados");
-System.out.println("-----------------------------------");
+            }
+            //=====================================
+            //Mostrar datos ordenados
+            //=====================================
+    System.out.println("--------------------------------------");
+    System.out.println("Datos ordenados");
+    System.out.println("-----------------------------------");
+    System.out.println("AÑO\tMES\tZONA\tDEPARTAMENTO\tID MUNICIPIO\tMUNICIPIO\tMONTO");
     for (int i = 0; i < totalRegistros; i++) {
-        for (int j = 0; j < 7; j++) {
-          System.out.println(datos[i][j] + "\t");
-        }
-          System.out.println();
-        }  
+        String montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
+        System.out.println(
+                datos[i][ANIO] + "\t" +
+                datos[i][MES] + "\t" +
+                datos[i][ZONA] + "\t" +
+                datos[i][DEPARTAMENTO] + "\t" +
+                datos[i][ID_MUNICIPIO] + "\t" +
+                datos[i][NOMBRE_MUNICIPIO] + "\t" +
+                "$" + montoFormateado
+        );
+    }
     }
 
 }
