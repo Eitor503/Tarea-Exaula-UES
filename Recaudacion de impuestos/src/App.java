@@ -487,7 +487,7 @@ public static void registrarDatos() {
         String municipio = datos[i][5];
         double monto = Double.parseDouble(datos[i][6]);
 
-        boolean encontrado = false; // variable para determinar si la combinación está
+        int encontrado = 0; // variable para determinar si la combinación está
 
         // Buscar si ya existe la combinación en la lista auxiliar
         // del año y municipio de los datos, y si sí, sumarlos a los que ya están añadidos
@@ -502,7 +502,7 @@ public static void registrarDatos() {
 
                 reporte[j][2] = String.valueOf(totalActual);
 
-                encontrado = true;
+                encontrado = 1;
 
                 break; // Si ya encontró la combinación, romper el bucle y buscar
                         // con la otra combinación
@@ -510,7 +510,7 @@ public static void registrarDatos() {
         }
 
         // Si no existe, crear nueva fila
-        if(!encontrado) {
+        if(encontrado!=1) {
 
             reporte[filasReporte][0] = anio;
             reporte[filasReporte][1] = municipio;
