@@ -57,7 +57,7 @@ public class App {
         System.out.println("| 3. Reporte de recaudación por zona      |");
         System.out.println("| 4. Reporte de recaudación por municipio |");
         System.out.println("| 5. Reporte por municipio en año y       |");
-        System.out.println("|    y mes elegible                       |");
+        System.out.println("|    mes elegible                         |");
         System.out.println("| 6. Total ingresos desde 2020            |");
         System.out.println("| 7. Municipio con mayor ingreso          |");
         System.out.println("| 8. Municipio con menor ingreso          |");
