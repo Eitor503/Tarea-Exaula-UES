@@ -572,8 +572,8 @@ public static void registrarDatos() {
     // MÓDULO 6
     // Responsable: Fátima
     // =========================================
-    public static void reporteZonaAnioElegible() {
-  
+    public static void reporteMunicipioMesAnual() {
+        
 }
 
     // =========================================
