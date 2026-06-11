@@ -573,7 +573,95 @@ public static void registrarDatos() {
     // Responsable: Fátima
     // =========================================
     public static void reporteMunicipioMesAnual() {
-        
+    System.out.println("Módulo 6 - Reporte por municipio en mes y año elegible");
+    
+    if (totalRegistros == 0) {
+        System.out.println("No hay datos en la matriz principal para generar reportes.");
+        return;
+    }
+
+    int anioElegido = 0;
+    while (true) {
+        System.out.print("Ingrese el año a consultar (desde 2020): ");
+        try {
+            anioElegido = Integer.parseInt(sc.nextLine().trim());
+            if (anioElegido >= 2020) {
+                break;
+            }
+            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error, por favor digite un número entero válido.");
+        }
+    }
+
+    int mesElegido = 0;
+    while (true) {
+        System.out.print("Ingrese el mes a consultar (1 al 12): ");
+        try {
+            mesElegido = Integer.parseInt(sc.nextLine().trim());
+            if (mesElegido >= 1 && mesElegido <= 12) {
+                break;
+            }
+            System.out.println("Error. El mes debe estar entre 1 y 12.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error, por favor digite un número entero válido.");
+        }
+    }
+
+    String idMunicipioBuscado = "";
+    int indiceAuxiliar = -1;
+    while (indiceAuxiliar == -1) {
+        System.out.print("Ingrese ID del municipio a consultar (1 al 44): ");
+        idMunicipioBuscado = sc.nextLine().trim();
+
+        for (int i = 0; i < totalRegistros; i++) {
+            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idMunicipioBuscado)) {
+                indiceAuxiliar = i;
+                break;
+            }
+        }
+        if (indiceAuxiliar == -1) {
+            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44).");
+        }
+    }
+
+    String nombreMunicipio = datos[indiceAuxiliar][NOMBRE_MUNICIPIO];
+    String anioBuscadoStr = String.valueOf(anioElegido);
+    String mesBuscadoStr = String.valueOf(mesElegido);
+    
+    double totalRecaudado = 0.0;
+    boolean encontroDatos = false;
+
+    for (int j = 0; j < totalRegistros; j++) {
+        if (datos[j][ANIO] == null || datos[j][MES] == null || datos[j][ID_MUNICIPIO] == null || datos[j][MONTO] == null) {
+            continue;
+        }
+
+        if (datos[j][ID_MUNICIPIO].equals(idMunicipioBuscado) && 
+            datos[j][ANIO].equals(anioBuscadoStr) && 
+            datos[j][MES].equals(mesBuscadoStr)) {
+            
+            encontroDatos = true;
+            double monto = Double.parseDouble(datos[j][MONTO]);
+            totalRecaudado += monto;
+        }
+    }
+    System.out.println("\n-------------------------------------------------------------------------------------");
+    System.out.println("                         REPORTE DE RECAUDACIÓN DE IMPUESTOS                           ");
+    System.out.println("=======================================================================================");
+    System.out.println("| ID MUNICIPIO | NOMBRE MUNICIPIO             | PERIODO         | TOTAL RECAUDADO     |");
+    System.out.println("+--------------+------------------------------+-----------------+---------------------+");
+    
+    String periodoStr = "Mes " + mesElegido + " / " + anioElegido;
+    if (!encontroDatos) {
+        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
+                idMunicipioBuscado, nombreMunicipio, periodoStr, "$0.00 (Sin datos)");
+    } else {
+        String montoStr = String.format("$%.2f", totalRecaudado);
+        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
+                idMunicipioBuscado, nombreMunicipio, periodoStr, montoStr);
+    }
+    System.out.println("--------------------------------------------------------------------------------------");    
 }
 
     // =========================================
