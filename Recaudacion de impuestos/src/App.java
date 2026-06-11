@@ -56,7 +56,8 @@ public class App {
         System.out.println("| 2. Guardar nuevos datos en CSV          |");
         System.out.println("| 3. Reporte de recaudación por zona      |");
         System.out.println("| 4. Reporte de recaudación por municipio |");
-        System.out.println("| 5. Reporte por zona en año específico   |");
+        System.out.println("| 5. Reporte por municipio en año y       |");
+        System.out.println("|    y mes elegible                       |");
         System.out.println("| 6. Total ingresos desde 2020            |");
         System.out.println("| 7. Municipio con mayor ingreso          |");
         System.out.println("| 8. Municipio con menor ingreso          |");
@@ -90,7 +91,7 @@ public class App {
                     break;
 
                 case 5:
-                    reporteZonaAnioElegible();
+                    reporteMunicipioMesAnual();
                     break;
 
                 case 6:
@@ -125,8 +126,9 @@ public class App {
                     System.out.println("Opción inválida.");
             }
 
-            System.out.printf("Presione cualquier tecla para continuar...");
+            System.out.printf("Presione ENTER para continuar...");
             sc.nextLine();
+            System.out.println();
 
         } while(opcion != 12);
 
@@ -570,7 +572,7 @@ public static void registrarDatos() {
     // MÓDULO 6
     // Responsable: Fátima
     // =========================================
-    public static void reporteZonaAnioElegible() {
+    public static void reporteMunicipioMesAnual() {
     System.out.println("Módulo 6 Reporte por zona en año específico");
 
     if (totalRegistros == 0) { 
