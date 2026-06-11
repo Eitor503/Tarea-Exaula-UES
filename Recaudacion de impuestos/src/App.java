@@ -572,70 +572,9 @@ public static void registrarDatos() {
     // MÓDULO 6
     // Responsable: Fátima
     // =========================================
-    public static void reporteMunicipioMesAnual() {
-    System.out.println("Módulo 6 Reporte por zona en año específico");
-
-    if (totalRegistros == 0) { 
-        System.out.println("No hay datos en la matriz principal para generar reportes."); 
-        return; 
-    } 
-    int anioElegido = 0; 
-    while (true) { 
-        System.out.print("Ingrese el año a consultar (desde 2020) por favor: "); 
-        try { 
-            anioElegido = Integer.parseInt(sc.nextLine().trim()); 
-            if (anioElegido >= 2020) { 
-                break; 
-            } 
-            System.out.println("Error. El año debe ser igual o mayor a 2020."); 
-
-        } catch (NumberFormatException e) { 
-            System.out.println("Error, por favor dígite un número entero válido."); 
-        } 
-    } 
-
-    double totalOccidente = 0.0; 
-    double totalOriente = 0.0; 
-    double totalCentralParacentral = 0.0; 
-    boolean encontroDatos = false; 
-
-    String anioBuscadoStr = String.valueOf(anioElegido); 
-
-    //Recorrer la matriz principal una sola vez para filtrar y acumular los montos 
-    for (int j = 0; j < totalRegistros; j++) { 
-        if (datos[j][ANIO] == null || datos[j][ZONA] == null || datos[j][MONTO] == null) { 
-            continue; 
-        } 
-
-        if (datos[j][ANIO].equals(anioBuscadoStr)) { 
-            encontroDatos = true; 
-            String zona = datos[j][ZONA]; 
-            double monto = Double.parseDouble(datos[j][MONTO]); 
-
-            if (zona.equalsIgnoreCase("Occidente") || zona.equalsIgnoreCase("Occidental")) { 
-                totalOccidente += monto; 
-            } else if (zona.equalsIgnoreCase("Oriente") || zona.equalsIgnoreCase("Oriental")) { 
-                totalOriente += monto; 
-            } else { 
-                
-                totalCentralParacentral += monto;
-            } 
-        } 
-    } 
-    System.out.println("REPORTE DE RECAUDACIÓN PARA EL AÑO: " + anioElegido); 
-System.out.println("======================================================="); 
-    if (!encontroDatos) { 
-        System.out.println("No se encontraron registros de impuestos para el año " + anioElegido); 
-    } else { 
-        System.out.printf("ZONA OCCIDENTAL: $%.2f\n", totalOccidente); 
-        System.out.printf("ZONA ORIENTAL: $%.2f\n", totalOriente); 
-        System.out.printf("ZONA CENTRAL/PARACENTRAL: $%.2f\n", totalCentralParacentral); 
-        System.out.println("-------------------------------------------------------"); 
-        System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); 
-    } 
-    System.out.println("======================================================="); 
-    }
-
+    public static void reporteZonaAnioElegible() {
+  
+}
 
     // =========================================
     // MÓDULO 7
