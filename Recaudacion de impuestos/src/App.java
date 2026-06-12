@@ -483,9 +483,9 @@ public static void registrarDatos() {
     for(int i = 0; i < totalRegistros; i++) {
 
         // Obtenemos los valores que queremos evaluar de cada fila
-        String anio = datos[i][0];
-        String municipio = datos[i][5];
-        double monto = Double.parseDouble(datos[i][6]);
+        String anio = datos[i][ANIO];
+        String municipio = datos[i][NOMBRE_MUNICIPIO];
+        double monto = Double.parseDouble(datos[i][MONTO]);
 
         int encontrado = 0; // variable para determinar si la combinación está
 
