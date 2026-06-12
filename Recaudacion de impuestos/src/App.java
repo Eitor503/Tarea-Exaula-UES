@@ -393,52 +393,57 @@ public static void registrarDatos() {
         // 3 total paracentral/central
         String[][] reporte = {
 
-        {"2020", "0", "0", "0"},
-        {"2021", "0", "0", "0"},
-        {"2022", "0", "0", "0"},
-        {"2023", "0", "0", "0"},
-        {"2024", "0", "0", "0"},
-        {"2025", "0", "0", "0"},
-        {"2026", "0", "0", "0"}
+            {"2020", "0", "0", "0"},
+            {"2021", "0", "0", "0"},
+            {"2022", "0", "0", "0"},
+            {"2023", "0", "0", "0"},
+            {"2024", "0", "0", "0"},
+            {"2025", "0", "0", "0"},
+            {"2026", "0", "0", "0"}
     };
+        int anio;
+        int aniodatos;
+        double recaudacionOccidental;
+        double recaudacionOriental;
+        double recaudacionCentral;
+        double montoFiltrar;
+        String zonaFiltrar;
+
 
         
         // Recorro cada fila de la matriz reporte
         for (int i = 0; i < reporte.length; i++){
             // Obtenemos el año y el valor de cada recaudación por zona
-            int anio = Integer.parseInt(reporte[i][0]);
-            double recaudacionOccidental = Double.parseDouble(reporte[i][1]);
-            double recaudacionOriental = Double.parseDouble(reporte[i][2]); 
-            double recaudacionCentral = Double.parseDouble(reporte[i][3]);
+            anio = Integer.parseInt(reporte[i][0]);
+            recaudacionOccidental = Double.parseDouble(reporte[i][1]);
+            recaudacionOriental = Double.parseDouble(reporte[i][2]); 
+            recaudacionCentral = Double.parseDouble(reporte[i][3]);
 
             // Ahora recorremos la matriz principal para comparar datos
             for (int j = 0; j < totalRegistros; j++){
 
-                if ( datos[j][ANIO] == null){
-                    continue; // Por si acaso hay algún dato vacío colado, nos saltamos esa línea
-                }
                 // Obtenemos el año de la fila de la matriz principal
-                int aniodatos = Integer.parseInt(datos[j][ANIO]);
+                aniodatos = Integer.parseInt(datos[j][ANIO]);
 
                 // Validamos que el año filtrado sea el deseado
                 if (aniodatos == anio){
                     
                     // Obtenemos la zona a filtrar y el monto
-                    String zona_filtrar = datos[j][ZONA];
-                    double monto_filtrar = Double.parseDouble(datos[j][MONTO]);
+                    zonaFiltrar = datos[j][ZONA];
+                    montoFiltrar = Double.parseDouble(datos[j][MONTO]);
 
                     // Validamos de qué zona es la fila y la guardamos en el monto
                     // correspondiente
-                    if (zona_filtrar.equals("Occidente")){
-                        recaudacionOccidental += monto_filtrar;
+                    if (zonaFiltrar.equals("Occidente")){
+                        recaudacionOccidental += montoFiltrar;
                     }
 
-                    else if (zona_filtrar.equals("Oriente")){
-                        recaudacionOriental += monto_filtrar;
+                    else if (zonaFiltrar.equals("Oriente")){
+                        recaudacionOriental += montoFiltrar;
                     }
 
                     else {
-                        recaudacionCentral += monto_filtrar;
+                        recaudacionCentral += montoFiltrar;
                     }
 
                 }
@@ -478,16 +483,25 @@ public static void registrarDatos() {
     String[][] reporte = new String[500][3];
 
     int filasReporte = 0; // Variable que controla la cantidad de filas que tenga el reporte
+    String anio;
+    String municipio;
+    double monto;
+    double totalActual;
+    int anioSiguiente;
+    int anioActual;
+    String temp;
+    double total;
+    int encontrado; // variable para determinar si la combinación está
 
     // Recorremos la matriz principal fila por fila
     for(int i = 0; i < totalRegistros; i++) {
 
         // Obtenemos los valores que queremos evaluar de cada fila
-        String anio = datos[i][ANIO];
-        String municipio = datos[i][NOMBRE_MUNICIPIO];
-        double monto = Double.parseDouble(datos[i][MONTO]);
+        anio = datos[i][ANIO];
+        municipio = datos[i][NOMBRE_MUNICIPIO];
+        monto = Double.parseDouble(datos[i][MONTO]);
 
-        int encontrado = 0; // variable para determinar si la combinación está
+        encontrado = 0; // variable para determinar si la combinación está
 
         // Buscar si ya existe la combinación en la lista auxiliar
         // del año y municipio de los datos, y si sí, sumarlos a los que ya están añadidos
@@ -496,7 +510,7 @@ public static void registrarDatos() {
 
             if(reporte[j][0].equals(anio) && reporte[j][1].equals(municipio)) {
 
-                double totalActual = Double.parseDouble(reporte[j][2]);
+                totalActual = Double.parseDouble(reporte[j][2]);
 
                 totalActual += monto;
 
@@ -504,8 +518,6 @@ public static void registrarDatos() {
 
                 encontrado = 1;
 
-                break; // Si ya encontró la combinación, romper el bucle y buscar
-                        // con la otra combinación
             }
         }
 
@@ -527,17 +539,15 @@ public static void registrarDatos() {
 
         for(int j = 0; j < filasReporte - 1 - i; j++) {
 
-            int anioActual =
-                    Integer.parseInt(reporte[j][0]);
+            anioActual = Integer.parseInt(reporte[j][0]);
 
-            int anioSiguiente =
-                    Integer.parseInt(reporte[j + 1][0]);
+            anioSiguiente = Integer.parseInt(reporte[j + 1][0]);
 
             if(anioActual > anioSiguiente) {
 
                 for(int k = 0; k < 3; k++) {
 
-                    String temp = reporte[j][k];
+                    temp = reporte[j][k];
 
                     reporte[j][k] =
                             reporte[j + 1][k];
@@ -556,8 +566,7 @@ public static void registrarDatos() {
     // Bucle obtener cada valor de la matriz
     for(int i = 0; i < filasReporte; i++) {
 
-        double total =
-                Double.parseDouble(reporte[i][2]);
+        total = Double.parseDouble(reporte[i][2]);
 
         System.out.println(
                 reporte[i][0] + "\t" +
