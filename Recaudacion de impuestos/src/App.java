@@ -724,12 +724,16 @@ public static void registrarDatos() {
 
     public static void municipioMayorIngreso() {
         System.out.println("Módulo 8");
-
+        
+        //=======================
         // Declaración de vectores
+        //========================
         double[] montoMunicipio = new double[44];
         String[] municipio = new String[44];
 
+        //=========================
         // Declaración de variables
+        //========================
         int idMunicipio;
         int mayor = 0;
         int i;
@@ -750,7 +754,7 @@ public static void registrarDatos() {
                     mayor = i;
                 }
             }
-           // Mostrar resultados 
+           //Resultados 
     System.out.println("-------------------------------------");
     System.out.println("Municipio con mayor ingreso");
     System.out.println("-------------------------------------");
@@ -766,7 +770,9 @@ public static void registrarDatos() {
     public static void municipioMenorIngreso() {
         System.out.println("Modulo 9");
 
+        //========================
         //Declaración de variables 
+        //========================
         int anio;
         int mes;
         int i;
@@ -806,7 +812,7 @@ public static void registrarDatos() {
         }
 
         //===================================
-        // Impresión de resultados
+        //Resultados
         //===================================
         if (encontrado) {
             System.out.println("----------------------------------");
@@ -940,7 +946,7 @@ public static void registrarDatos() {
         String montoFormateado;
 
         //========================================
-        //Mostrar datos desordenados
+        //Datos desordenados
         //=======================================
         System.out.println("---------------------------------------");
         System.out.println("Datos desordenados:");
@@ -978,7 +984,7 @@ public static void registrarDatos() {
                 }
             }
             //=====================================
-            //Mostrar datos ordenados
+            //Datos ordenados
             //=====================================
     System.out.println("--------------------------------------");
     System.out.println("Datos ordenados");
