@@ -56,7 +56,8 @@ public class App {
         System.out.println("| 2. Guardar nuevos datos en CSV          |");
         System.out.println("| 3. Reporte de recaudación por zona      |");
         System.out.println("| 4. Reporte de recaudación por municipio |");
-        System.out.println("| 5. Reporte por zona en año específico   |");
+        System.out.println("| 5. Reporte por municipio en año y       |");
+        System.out.println("|    mes elegible                         |");
         System.out.println("| 6. Total ingresos desde 2020            |");
         System.out.println("| 7. Municipio con mayor ingreso          |");
         System.out.println("| 8. Municipio con menor ingreso          |");
@@ -90,7 +91,7 @@ public class App {
                     break;
 
                 case 5:
-                    reporteZonaAnioElegible();
+                    reporteMunicipioMesAnual();
                     break;
 
                 case 6:
@@ -125,8 +126,9 @@ public class App {
                     System.out.println("Opción inválida.");
             }
 
-            System.out.printf("Presione cualquier tecla para continuar...");
+            System.out.printf("Presione ENTER para continuar...");
             sc.nextLine();
+            System.out.println();
 
         } while(opcion != 12);
 
@@ -391,52 +393,57 @@ public static void registrarDatos() {
         // 3 total paracentral/central
         String[][] reporte = {
 
-        {"2020", "0", "0", "0"},
-        {"2021", "0", "0", "0"},
-        {"2022", "0", "0", "0"},
-        {"2023", "0", "0", "0"},
-        {"2024", "0", "0", "0"},
-        {"2025", "0", "0", "0"},
-        {"2026", "0", "0", "0"}
+            {"2020", "0", "0", "0"},
+            {"2021", "0", "0", "0"},
+            {"2022", "0", "0", "0"},
+            {"2023", "0", "0", "0"},
+            {"2024", "0", "0", "0"},
+            {"2025", "0", "0", "0"},
+            {"2026", "0", "0", "0"}
     };
+        int anio;
+        int aniodatos;
+        double recaudacionOccidental;
+        double recaudacionOriental;
+        double recaudacionCentral;
+        double montoFiltrar;
+        String zonaFiltrar;
+
 
         
         // Recorro cada fila de la matriz reporte
         for (int i = 0; i < reporte.length; i++){
             // Obtenemos el año y el valor de cada recaudación por zona
-            int anio = Integer.parseInt(reporte[i][0]);
-            double recaudacionOccidental = Double.parseDouble(reporte[i][1]);
-            double recaudacionOriental = Double.parseDouble(reporte[i][2]); 
-            double recaudacionCentral = Double.parseDouble(reporte[i][3]);
+            anio = Integer.parseInt(reporte[i][0]);
+            recaudacionOccidental = Double.parseDouble(reporte[i][1]);
+            recaudacionOriental = Double.parseDouble(reporte[i][2]); 
+            recaudacionCentral = Double.parseDouble(reporte[i][3]);
 
             // Ahora recorremos la matriz principal para comparar datos
             for (int j = 0; j < totalRegistros; j++){
 
-                if ( datos[j][ANIO] == null){
-                    continue; // Por si acaso hay algún dato vacío colado, nos saltamos esa línea
-                }
                 // Obtenemos el año de la fila de la matriz principal
-                int aniodatos = Integer.parseInt(datos[j][ANIO]);
+                aniodatos = Integer.parseInt(datos[j][ANIO]);
 
                 // Validamos que el año filtrado sea el deseado
                 if (aniodatos == anio){
                     
                     // Obtenemos la zona a filtrar y el monto
-                    String zona_filtrar = datos[j][ZONA];
-                    double monto_filtrar = Double.parseDouble(datos[j][MONTO]);
+                    zonaFiltrar = datos[j][ZONA];
+                    montoFiltrar = Double.parseDouble(datos[j][MONTO]);
 
                     // Validamos de qué zona es la fila y la guardamos en el monto
                     // correspondiente
-                    if (zona_filtrar.equals("Occidente")){
-                        recaudacionOccidental += monto_filtrar;
+                    if (zonaFiltrar.equals("Occidente")){
+                        recaudacionOccidental += montoFiltrar;
                     }
 
-                    else if (zona_filtrar.equals("Oriente")){
-                        recaudacionOriental += monto_filtrar;
+                    else if (zonaFiltrar.equals("Oriente")){
+                        recaudacionOriental += montoFiltrar;
                     }
 
                     else {
-                        recaudacionCentral += monto_filtrar;
+                        recaudacionCentral += montoFiltrar;
                     }
 
                 }
@@ -476,16 +483,25 @@ public static void registrarDatos() {
     String[][] reporte = new String[500][3];
 
     int filasReporte = 0; // Variable que controla la cantidad de filas que tenga el reporte
+    String anio;
+    String municipio;
+    double monto;
+    double totalActual;
+    int anioSiguiente;
+    int anioActual;
+    String temp;
+    double total;
+    int encontrado; // variable para determinar si la combinación está
 
     // Recorremos la matriz principal fila por fila
     for(int i = 0; i < totalRegistros; i++) {
 
         // Obtenemos los valores que queremos evaluar de cada fila
-        String anio = datos[i][0];
-        String municipio = datos[i][5];
-        double monto = Double.parseDouble(datos[i][6]);
+        anio = datos[i][ANIO];
+        municipio = datos[i][NOMBRE_MUNICIPIO];
+        monto = Double.parseDouble(datos[i][MONTO]);
 
-        boolean encontrado = false; // variable para determinar si la combinación está
+        encontrado = 0; // variable para determinar si la combinación está
 
         // Buscar si ya existe la combinación en la lista auxiliar
         // del año y municipio de los datos, y si sí, sumarlos a los que ya están añadidos
@@ -494,21 +510,19 @@ public static void registrarDatos() {
 
             if(reporte[j][0].equals(anio) && reporte[j][1].equals(municipio)) {
 
-                double totalActual = Double.parseDouble(reporte[j][2]);
+                totalActual = Double.parseDouble(reporte[j][2]);
 
                 totalActual += monto;
 
                 reporte[j][2] = String.valueOf(totalActual);
 
-                encontrado = true;
+                encontrado = 1;
 
-                break; // Si ya encontró la combinación, romper el bucle y buscar
-                        // con la otra combinación
             }
         }
 
         // Si no existe, crear nueva fila
-        if(!encontrado) {
+        if(encontrado!=1) {
 
             reporte[filasReporte][0] = anio;
             reporte[filasReporte][1] = municipio;
@@ -525,17 +539,15 @@ public static void registrarDatos() {
 
         for(int j = 0; j < filasReporte - 1 - i; j++) {
 
-            int anioActual =
-                    Integer.parseInt(reporte[j][0]);
+            anioActual = Integer.parseInt(reporte[j][0]);
 
-            int anioSiguiente =
-                    Integer.parseInt(reporte[j + 1][0]);
+            anioSiguiente = Integer.parseInt(reporte[j + 1][0]);
 
             if(anioActual > anioSiguiente) {
 
                 for(int k = 0; k < 3; k++) {
 
-                    String temp = reporte[j][k];
+                    temp = reporte[j][k];
 
                     reporte[j][k] =
                             reporte[j + 1][k];
@@ -554,8 +566,7 @@ public static void registrarDatos() {
     // Bucle obtener cada valor de la matriz
     for(int i = 0; i < filasReporte; i++) {
 
-        double total =
-                Double.parseDouble(reporte[i][2]);
+        total = Double.parseDouble(reporte[i][2]);
 
         System.out.println(
                 reporte[i][0] + "\t" +
@@ -570,70 +581,97 @@ public static void registrarDatos() {
     // MÓDULO 6
     // Responsable: Fátima
     // =========================================
-    public static void reporteZonaAnioElegible() {
-    System.out.println("Módulo 6 Reporte por zona en año específico");
-
-    if (totalRegistros == 0) { 
-        System.out.println("No hay datos en la matriz principal para generar reportes."); 
-        return; 
-    } 
-    int anioElegido = 0; 
-    while (true) { 
-        System.out.print("Ingrese el año a consultar (desde 2020) por favor: "); 
-        try { 
-            anioElegido = Integer.parseInt(sc.nextLine().trim()); 
-            if (anioElegido >= 2020) { 
-                break; 
-            } 
-            System.out.println("Error. El año debe ser igual o mayor a 2020."); 
-
-        } catch (NumberFormatException e) { 
-            System.out.println("Error, por favor dígite un número entero válido."); 
-        } 
-    } 
-
-    double totalOccidente = 0.0; 
-    double totalOriente = 0.0; 
-    double totalCentralParacentral = 0.0; 
-    boolean encontroDatos = false; 
-
-    String anioBuscadoStr = String.valueOf(anioElegido); 
-
-    //Recorrer la matriz principal una sola vez para filtrar y acumular los montos 
-    for (int j = 0; j < totalRegistros; j++) { 
-        if (datos[j][ANIO] == null || datos[j][ZONA] == null || datos[j][MONTO] == null) { 
-            continue; 
-        } 
-
-        if (datos[j][ANIO].equals(anioBuscadoStr)) { 
-            encontroDatos = true; 
-            String zona = datos[j][ZONA]; 
-            double monto = Double.parseDouble(datos[j][MONTO]); 
-
-            if (zona.equalsIgnoreCase("Occidente") || zona.equalsIgnoreCase("Occidental")) { 
-                totalOccidente += monto; 
-            } else if (zona.equalsIgnoreCase("Oriente") || zona.equalsIgnoreCase("Oriental")) { 
-                totalOriente += monto; 
-            } else { 
-                
-                totalCentralParacentral += monto;
-            } 
-        } 
-    } 
-    System.out.println("REPORTE DE RECAUDACIÓN PARA EL AÑO: " + anioElegido); 
-System.out.println("======================================================="); 
-    if (!encontroDatos) { 
-        System.out.println("No se encontraron registros de impuestos para el año " + anioElegido); 
-    } else { 
-        System.out.printf("ZONA OCCIDENTAL: $%.2f\n", totalOccidente); 
-        System.out.printf("ZONA ORIENTAL: $%.2f\n", totalOriente); 
-        System.out.printf("ZONA CENTRAL/PARACENTRAL: $%.2f\n", totalCentralParacentral); 
-        System.out.println("-------------------------------------------------------"); 
-        System.out.printf("TOTAL RECAUDADO EN %d: $%.2f\n", anioElegido, (totalOccidente + totalOriente + totalCentralParacentral)); 
-    } 
-    System.out.println("======================================================="); 
+    public static void reporteMunicipioMesAnual() {
+    System.out.println("Módulo 6 - Reporte por municipio en mes y año elegible");
+    
+    if (totalRegistros == 0) {
+        System.out.println("No hay datos en la matriz principal para generar reportes.");
+        return;
     }
 
+    int anioElegido = 0;
+    while (true) {
+        System.out.print("Ingrese el año a consultar (desde 2020): ");
+        try {
+            anioElegido = Integer.parseInt(sc.nextLine().trim());
+            if (anioElegido >= 2020) {
+                break;
+            }
+            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error, por favor digite un número entero válido.");
+        }
+    }
+
+    int mesElegido = 0;
+    while (true) {
+        System.out.print("Ingrese el mes a consultar (1 al 12): ");
+        try {
+            mesElegido = Integer.parseInt(sc.nextLine().trim());
+            if (mesElegido >= 1 && mesElegido <= 12) {
+                break;
+            }
+            System.out.println("Error. El mes debe estar entre 1 y 12.");
+        } catch (NumberFormatException e) {
+            System.out.println("Error, por favor digite un número entero válido.");
+        }
+    }
+
+    String idMunicipioBuscado = "";
+    int indiceAuxiliar = -1;
+    while (indiceAuxiliar == -1) {
+        System.out.print("Ingrese ID del municipio a consultar (1 al 44): ");
+        idMunicipioBuscado = sc.nextLine().trim();
+
+        for (int i = 0; i < totalRegistros; i++) {
+            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idMunicipioBuscado)) {
+                indiceAuxiliar = i;
+                break;
+            }
+        }
+        if (indiceAuxiliar == -1) {
+            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44).");
+        }
+    }
+
+    String nombreMunicipio = datos[indiceAuxiliar][NOMBRE_MUNICIPIO];
+    String anioBuscadoStr = String.valueOf(anioElegido);
+    String mesBuscadoStr = String.valueOf(mesElegido);
+    
+    double totalRecaudado = 0.0;
+    boolean encontroDatos = false;
+
+    for (int j = 0; j < totalRegistros; j++) {
+        if (datos[j][ANIO] == null || datos[j][MES] == null || datos[j][ID_MUNICIPIO] == null || datos[j][MONTO] == null) {
+            continue;
+        }
+
+        if (datos[j][ID_MUNICIPIO].equals(idMunicipioBuscado) && 
+            datos[j][ANIO].equals(anioBuscadoStr) && 
+            datos[j][MES].equals(mesBuscadoStr)) {
+            
+            encontroDatos = true;
+            double monto = Double.parseDouble(datos[j][MONTO]);
+            totalRecaudado += monto;
+        }
+    }
+    System.out.println("\n-------------------------------------------------------------------------------------");
+    System.out.println("                         REPORTE DE RECAUDACIÓN DE IMPUESTOS                           ");
+    System.out.println("=======================================================================================");
+    System.out.println("| ID MUNICIPIO | NOMBRE MUNICIPIO             | PERIODO         | TOTAL RECAUDADO     |");
+    System.out.println("+--------------+------------------------------+-----------------+---------------------+");
+    
+    String periodoStr = "Mes " + mesElegido + " / " + anioElegido;
+    if (!encontroDatos) {
+        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
+                idMunicipioBuscado, nombreMunicipio, periodoStr, "$0.00 (Sin datos)");
+    } else {
+        String montoStr = String.format("$%.2f", totalRecaudado);
+        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
+                idMunicipioBuscado, nombreMunicipio, periodoStr, montoStr);
+    }
+    System.out.println("--------------------------------------------------------------------------------------");    
+}
 
     // =========================================
     // MÓDULO 7
