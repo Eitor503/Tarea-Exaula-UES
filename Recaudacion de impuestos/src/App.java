@@ -725,7 +725,7 @@ public static void registrarDatos() {
     public static void municipioMayorIngreso() {
         System.out.println("Módulo 8");
 
-        // Declaracion de vectores
+        // Declaración de vectores
         double[] montoMunicipio = new double[44];
         String[] municipio = new String[44];
 
@@ -766,7 +766,7 @@ public static void registrarDatos() {
     public static void municipioMenorIngreso() {
         System.out.println("Modulo 9");
 
-        //Declaraion de variables 
+        //Declaración de variables 
         int anio;
         int mes;
         int i;
