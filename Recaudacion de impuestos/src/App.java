@@ -193,10 +193,10 @@ public class App {
     // MÓDULO 2
     // Responsable: Fatima
     
-    //DECLARACIÓN DE VARIABLES GLOBALES PARA EL MÓDULO 2
+    //DECLARACIÓN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
 static String[][] nuevosRegistros = new String[500][7]; 
 static int totalNuevos = 0;
-// FIN DECLARACIÓN DE VARIABLES GLOBALES PARA EL MÓDULO 2
+// FIN DECLARACIÓN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
 
 public static void registrarDatos() {
         System.out.println("Módulo 2 - Registrar nuevos municipios");
