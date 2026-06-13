@@ -251,17 +251,15 @@ public static void registrarDatos() {
         System.out.print("Ingrese ID del municipio: ");
         idInput = sc.nextLine().trim();
 
-        for (int i = 0; i < totalRegistros; i++) {
-            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) {
-                indiceEncontrado = i;
-                break;
-            }
-        }
+        for (int i = 0; i < totalRegistros && indiceEncontrado == -1; i++) {
+    if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) {
+        indiceEncontrado = i; 
+    }
+}
         if (indiceEncontrado == -1) {
             System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44).");
         }
     }
-
     String zonaAuto = datos[indiceEncontrado][ZONA];
     String deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
     String municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO];
