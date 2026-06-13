@@ -931,6 +931,14 @@ public static void registrarDatos() {
 
     public static void ordenarDatosBubbleSort() {
         System.out.println("Módulo 12");
+
+        //Declaración de variables
+        int i;
+        int j;
+        int k;
+        String auxiliar;
+        String montoFormateado;
+
         //========================================
         //Mostrar datos desordenados
         //=======================================
@@ -938,8 +946,9 @@ public static void registrarDatos() {
         System.out.println("Datos desordenados:");
         System.out.println("-------------------------------------");
         System.out.println("AÑO\tMES\tZONA\tDEPARTAMENTO\tID MUNICIPIO\tMUNICIPIO\tMONTO");
-        for (int i = 0; i < totalRegistros; i++) {
-            String montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
+
+        for (i = 0; i < totalRegistros; i++) {
+            montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
             System.out.println(
                     datos[i][ANIO] + "\t" +
                     datos[i][MES] + "\t" +
@@ -955,13 +964,13 @@ public static void registrarDatos() {
               //====================================
               // Ordenamiento de Bubble Sort
               //====================================
-            for (int i = 0; i < totalRegistros -1; i++) {
-                for (int j = 0; j < totalRegistros -1 -i; j++) {
+            for (i = 0; i < totalRegistros -1; i++) {
+                for (j = 0; j < totalRegistros -1 -i; j++) {
                     if (Double.parseDouble(datos[j][MONTO]) > Double.parseDouble(datos[j+1][MONTO])) {
 
                         // Intercambiar registro completo
-                        for (int k = 0; k < 7; k++) {
-                            String auxiliar = datos[j][k];
+                        for (k = 0; k < 7; k++) {
+                            auxiliar = datos[j][k];
                             datos[j][k] = datos[j+1][k];
                             datos[j+1][k] = auxiliar;
                         }
@@ -975,8 +984,8 @@ public static void registrarDatos() {
     System.out.println("Datos ordenados");
     System.out.println("-----------------------------------");
     System.out.println("AÑO\tMES\tZONA\tDEPARTAMENTO\tID MUNICIPIO\tMUNICIPIO\tMONTO");
-    for (int i = 0; i < totalRegistros; i++) {
-        String montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
+    for (i = 0; i < totalRegistros; i++) {
+        montoFormateado = String.format("%.2f", Double.parseDouble(datos[i][MONTO]));
         System.out.println(
                 datos[i][ANIO] + "\t" +
                 datos[i][MES] + "\t" +
