@@ -754,8 +754,16 @@ public static void registrarDatos() {
 
     public static void municipioMenorIngreso() {
         System.out.println("Modulo 9");
+
+        //Declaraion de variables 
         int anio;
         int mes;
+        int i;
+        double menorMonto = 0;
+        double monto;
+        String nombreMunicipio = "";
+        boolean encontrado = false;
+
         //=====================================
         // Valiación del año
         // ====================================
@@ -771,16 +779,13 @@ public static void registrarDatos() {
             System.out.println("Ingrese el mes a consultar (1-12):");
             mes = Integer.parseInt(sc.nextLine());
         } while (mes < 1 || mes > 12);
-        double menorMonto = 0;
-        String nombreMunicipio = "";
-        boolean encontrado = false;
-
+       
         //===================================
         // Busqueda del menor ingreso
         //===================================
-        for (int i = 0; i < totalRegistros; i++) {
+        for (i = 0; i < totalRegistros; i++) {
             if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
-                double monto = Double.parseDouble(datos[i][MONTO]);
+                monto = Double.parseDouble(datos[i][MONTO]);
                 if (!encontrado || monto < menorMonto) {
                     menorMonto = monto;
                     nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
