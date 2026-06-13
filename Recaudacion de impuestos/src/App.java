@@ -675,23 +675,28 @@ System.out.println("=======================================================");
 
     public static void municipioMayorIngreso() {
         System.out.println("Módulo 8");
+
         // Declaracion de vectores
         double[] montoMunicipio = new double[44];
         String[] municipio = new String[44];
 
+        // Declaración de variables
+        int idMunicipio;
+        int mayor = 0;
+        int i;
+
         //=====================================
         // Acumular ingresos por municipio
         //====================================
-        for (int i = 0; i < totalRegistros; i++) {
-            int idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) - 1;
+        for (i = 0; i < totalRegistros; i++) {
+            idMunicipio = Integer.parseInt(datos[i][ID_MUNICIPIO]) - 1;
             montoMunicipio[idMunicipio] = montoMunicipio[idMunicipio] + Double.parseDouble(datos[i][MONTO]);
             municipio[idMunicipio] = datos[i][NOMBRE_MUNICIPIO];
         }
             //=================================================
             //Buscar el mayor ingreso
             //=================================================
-            int mayor = 0;
-            for (int i = 0; i < 44; i++) {
+            for (i = 0; i < 44; i++) {
                 if (montoMunicipio[i] > montoMunicipio[mayor]) {
                     mayor = i;
                 }
