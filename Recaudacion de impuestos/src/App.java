@@ -691,26 +691,30 @@ public static void registrarDatos() {
 
     public static void totalIngresosDesde2020() {
 
-    double totalIngresos = 0;
+    // Declaración de variables
+    int i;
+    int anio;
+    double monto;
+    double totalIngresos;
 
-    // Recorremos todos los registros cargados
-    for (int i = 0; i < totalRegistros; i++) {
+    // Inicialización de variables
+    totalIngresos = 0;
 
-        // Validamos que exista información en la fila
-        if (datos[i][ANIO] == null) {
-            continue;
-        }
+    // Recorrer todos los registros
+    for (i = 0; i < totalRegistros; i++) {
 
-        // Obtenemos año y monto
-        int anio = Integer.parseInt(datos[i][ANIO]);
-        double monto = Double.parseDouble(datos[i][MONTO]);
+        anio = Integer.parseInt(datos[i][ANIO]);
+        monto = Double.parseDouble(datos[i][MONTO]);
 
-        // Se suman únicamente registros desde 2020
+        // Acumular ingresos desde 2020
         if (anio >= 2020) {
-            totalIngresos += monto;
+
+            totalIngresos = totalIngresos + monto;
+
         }
     }
 
+    // Mostrar resultado
     System.out.println("----------------------------------");
     System.out.println("TOTAL DE INGRESOS DESDE 2020");
     System.out.println("----------------------------------");
@@ -833,60 +837,65 @@ public static void registrarDatos() {
 
     public static void reporteMensualPorAnio() {
 
+    // Declaración de variables
     int anioBuscar;
+    int i;
+    int anio;
+    int mes;
+    double monto;
 
-    // Validación del año
-    while (true) {
-
-        System.out.print("Ingrese el año a consultar: ");
-
-        try {
-
-            anioBuscar = Integer.parseInt(sc.nextLine());
-
-            if (anioBuscar >= 2020) {
-                break;
-            }
-
-            System.out.println("Error. El año debe ser igual o mayor a 2020.");
-
-        } catch (Exception e) {
-
-            System.out.println("Ingrese un número válido.");
-        }
-    }
-
-    // Vector para guardar los montos de cada mes
+    // Vector para almacenar los totales mensuales
     double[] totalMeses = new double[12];
 
-    // Recorremos la matriz principal
-    for (int i = 0; i < totalRegistros; i++) {
+    // Validación del año
+    do {
 
-        if (datos[i][ANIO] == null) {
-            continue;
+        System.out.print("Ingrese el año a consultar (2020-2026): ");
+        anioBuscar = Integer.parseInt(sc.nextLine());
+
+        if (anioBuscar < 2020 || anioBuscar > 2026) {
+
+            System.out.println("Error. Año fuera de rango.");
+
         }
 
-        int anio = Integer.parseInt(datos[i][ANIO]);
+    } while (anioBuscar < 2020 || anioBuscar > 2026);
 
-        // Sólo se trabaja con el año solicitado
+    // Inicializar vector
+    for (i = 0; i < 12; i++) {
+
+        totalMeses[i] = 0;
+
+    }
+
+    // Recorrer matriz principal
+    for (i = 0; i < totalRegistros; i++) {
+
+        anio = Integer.parseInt(datos[i][ANIO]);
+
         if (anio == anioBuscar) {
 
-            int mes = Integer.parseInt(datos[i][MES]);
-            double monto = Double.parseDouble(datos[i][MONTO]);
+            mes = Integer.parseInt(datos[i][MES]);
+            monto = Double.parseDouble(datos[i][MONTO]);
 
-            totalMeses[mes - 1] += monto;
+            totalMeses[mes - 1] =
+                    totalMeses[mes - 1] + monto;
+
         }
     }
 
+    // Mostrar reporte
     System.out.println("----------------------------------");
     System.out.println("REPORTE MENSUAL DEL AÑO " + anioBuscar);
     System.out.println("----------------------------------");
 
-    for (int i = 0; i < totalMeses.length; i++) {
+    for (i = 0; i < 12; i++) {
 
-        System.out.printf("Mes %d : $%.2f\n",
+        System.out.printf(
+                "Mes %d : $%.2f\n",
                 (i + 1),
-                totalMeses[i]);
+                totalMeses[i]
+        );
     }
 }
 
@@ -897,35 +906,46 @@ public static void registrarDatos() {
 
     public static void totalIngresosPorAnio() {
 
-    // Años válidos según el enunciado
-    int anioInicial = 2020;
-    int anioFinal = 2026;
+    // Declaración de variables
+    int anio;
+    int anioRegistro;
+    int i;
 
+    double monto;
+    double totalAnual;
+
+    // Encabezado
     System.out.println("----------------------------------");
     System.out.println("TOTAL DE INGRESOS POR AÑO");
     System.out.println("----------------------------------");
 
-    // Recorremos cada año
-    for (int anio = anioInicial; anio <= anioFinal; anio++) {
+    // Recorrer años
+    for (anio = 2020; anio <= 2026; anio++) {
 
-        double totalAnual = 0;
+        totalAnual = 0;
 
-        // Recorremos todos los registros
-        for (int i = 0; i < totalRegistros; i++) {
+        // Recorrer matriz principal
+        for (i = 0; i < totalRegistros; i++) {
 
-            if (datos[i][ANIO] == null) {
-                continue;
-            }
-
-            int anioRegistro = Integer.parseInt(datos[i][ANIO]);
+            anioRegistro =
+                    Integer.parseInt(datos[i][ANIO]);
 
             if (anioRegistro == anio) {
 
-                totalAnual += Double.parseDouble(datos[i][MONTO]);
+                monto =
+                        Double.parseDouble(datos[i][MONTO]);
+
+                totalAnual =
+                        totalAnual + monto;
+
             }
         }
 
-        System.out.printf("%d -> $%.2f\n", anio, totalAnual);
+        System.out.printf(
+                "%d -> $%.2f\n",
+                anio,
+                totalAnual
+        );
     }
 }
 
