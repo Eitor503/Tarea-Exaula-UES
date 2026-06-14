@@ -587,7 +587,6 @@ public static void registrarDatos() {
     double monto = 0.0;
     String entradaAnio = "";
     String entradaMes = "";
-    int controlAcceso = 1;
 // Matriz con ID y nombre de municipios para validación de entrada y autocompletado.
 String[][] municipios = {
     {"1", "Ahuachapán Norte"},    {"2", "Ahuachapán Centro"},  {"3", "Ahuachapán Sur"},      {"4", "Santa Ana Norte"},
@@ -603,7 +602,6 @@ String[][] municipios = {
     {"41", "Morazán Norte"},      {"42", "Morazán Sur"},       {"43", "La Unión Norte"},     {"44", "La Unión Sur"}
 };
 
-if (controlAcceso == 1) {
 // Validación del año, mes e ID de municipio.
     do {
 
@@ -658,7 +656,7 @@ if (controlAcceso == 1) {
 // Convertir año y mes a formato de texto para comparación con la matriz principal.
     anioBuscadoStr = String.valueOf(anioElegido);
     mesBuscadoStr = String.valueOf(mesElegido);
-}
+
         for (j = 0; j < totalRegistros; j++) { // Recorrer matriz principal para encontrar datos que coincidan con los criterios de búsqueda.
             if (datos[j][0] != null && datos[j][1] != null && datos[j][4] != null && datos[j][6] != null) { 
                 if (datos[j][4].equals(idMunicipioBuscado) && datos[j][0].equals(anioBuscadoStr) && datos[j][1].equals(mesBuscadoStr)) { 
