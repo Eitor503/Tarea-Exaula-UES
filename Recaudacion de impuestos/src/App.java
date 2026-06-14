@@ -603,7 +603,7 @@ public static void registrarDatos() {
     int mesElegido = 0; 
     int i = 0;
     int j = 0;
-    int k = 0; // Para recorrer textos carácter por carácter
+    int k = 0; 
     
     String idMunicipioBuscado = ""; 
     int indiceAuxiliar = -1; 
@@ -707,7 +707,7 @@ public static void registrarDatos() {
             if (datos[j][0] != null && datos[j][1] != null && datos[j][4] != null && datos[j][6] != null) { 
                 if (datos[j][4].equals(idMunicipioBuscado) && datos[j][0].equals(anioBuscadoStr) && datos[j][1].equals(mesBuscadoStr)) { 
                     datosEncontradosContador = datosEncontradosContador + 1; 
-                    monto = Double.parseDouble(datos[j][6]); // Columna 6 = Monto
+                    monto = Double.parseDouble(datos[j][6]); 
                     totalRecaudado += monto; 
                 } 
             } 
