@@ -194,24 +194,20 @@ public class App {
     // MÓDULO 2
     // Responsable: Fatima
 public static void registrarDatos() {
-
     System.out.println("Módulo 2 - Registrar nuevos municipios");
-
+// Declaración de variables.
     String idInput = "";
     int indiceEncontrado = -1;
     String zonaAuto = "";
     String deptoAuto = "";
     String municipioAuto = "";
-
     int anio = 0;
     int controlAnio = 0;
-
     int mes = 0;
     int controlMes = 0;
-
     double monto = 0;
     int controlMonto = 0;
-
+//Cuadro de municipios para autocompletado y validación de ID.
     System.out.println("+--------------------------------------+--------------------------------------+--------------------------------------+");
     System.out.println("| ID | ZONA OCCIDENTAL (11)            |ID  | ZONA CENTRAL Y PARACENTRAL (23) | ID | ZONA ORIENTAL (10)              |");
     System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+");
@@ -243,7 +239,7 @@ public static void registrarDatos() {
     if (totalRegistros < datos.length) {
 
       do {
-
+// Validación del ID ingresado y autocompletado de zona, departamento y municipio.
     System.out.print("Ingrese ID del municipio (1-44): ");
     idInput = sc.nextLine().trim();
 
@@ -261,7 +257,6 @@ public static void registrarDatos() {
     }
 
 } while (indiceEncontrado == -1);
-
         zonaAuto = datos[indiceEncontrado][ZONA];
         deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
         municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO];
@@ -306,7 +301,7 @@ public static void registrarDatos() {
         System.out.println("Error. El monto no puede ser negativo.");
     }
 }
-
+// Guardar datos en la matriz principal.
         datos[totalRegistros][ANIO] = String.valueOf(anio);
         datos[totalRegistros][MES] = String.valueOf(mes);
         datos[totalRegistros][ZONA] = zonaAuto;
@@ -331,19 +326,18 @@ public static void registrarDatos() {
     // Responsable: Fátima
     // =========================================
         public static void guardarDatosCSV() {
-
     System.out.println("Módulo 3 - Guardar nuevos datos en CSV");
-
+// Declaración de variables.
     String nombreArchivo = "Impuestos.csv";
 
     if (nuevosRegistros > 0) {
-
+// Guardar datos en el archivo CSV.
         try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.File(nombreArchivo))) {
 
             escritor.println("Año,Mes,Zona,Departamento,ID Municipio,Nombre Municipio,Monto");
 
             for (int i = 0; i < totalRegistros; i++) {
-
+// Guardar cada fila de datos en el archivo CSV.
                 escritor.println(
                     datos[i][ANIO] + "," +
                     datos[i][MES] + "," +
@@ -372,7 +366,7 @@ public static void registrarDatos() {
 
     // =========================================
     // MÓDULO 4
-    // Responsable: Ángel
+    // Responsable: Angel
     // =========================================
 
     public static void reporteZonaAnual() {
@@ -567,10 +561,9 @@ public static void registrarDatos() {
     }
     }
 
-
     // =========================================
     // MÓDULO 6
-    // Responsable: Fátima
+    // Responsable: Fatima
     // =========================================
     public static void reporteMunicipioMesAnual() { 
     System.out.println("Módulo 6 - Reporte por municipio en mes y año elegible"); 
@@ -582,112 +575,91 @@ public static void registrarDatos() {
     int controlMes = 0;
     int controlID = 0;
     int datosEncontradosContador = 0; 
-    
     int anioElegido = 0; 
     int mesElegido = 0; 
     int i = 0;
     int j = 0;
-    int k = 0; 
-    
     String idMunicipioBuscado = ""; 
-    int indiceAuxiliar = -1; 
-    
     String nombreMunicipio = "";
     String anioBuscadoStr = "";
     String mesBuscadoStr = "";
     double totalRecaudado = 0.0;
     double monto = 0.0;
-    
     String entradaAnio = "";
-    int esNumeroAnio = 1;
-    
     String entradaMes = "";
-    int esNumeroMes = 1;
-    
     int controlAcceso = 1;
+// Matriz con ID y nombre de municipios para validación de entrada y autocompletado.
+String[][] municipios = {
+    {"1", "Ahuachapán Norte"},    {"2", "Ahuachapán Centro"},  {"3", "Ahuachapán Sur"},      {"4", "Santa Ana Norte"},
+    {"5", "Santa Ana Centro"},    {"6", "Santa Ana Este"},     {"7", "Santa Ana Oeste"},     {"8", "Sonsonate Norte"},
+    {"9", "Sonsonate Centro"},    {"10", "Sonsonate Este"},    {"11", "Sonsonate Oeste"},    {"12", "Chalatenango Norte"},
+    {"13", "Chalatenango Centro"},{"14", "Chalatenango Sur"},  {"15", "La Libertad Norte"},  {"16", "La Libertad Centro"},
+    {"17", "La Libertad Oeste"},  {"18", "La Libertad Este"},  {"19", "La Libertad Sur"},    {"20", "La Libertad Costa"},
+    {"21", "San Salvador Norte"}, {"22", "San Salvador Oeste"},{"23", "San Salvador Centro"},{"24", "San Salvador Este"},
+    {"25", "San Salvador Sur"},   {"26", "Cuscatlán Norte"},   {"27", "Cuscatlán Sur"},      {"28", "La Paz Oeste"},
+    {"29", "La Paz Centro"},      {"30", "La Paz Este"},       {"31", "Cabañas Este"},       {"32", "Cabañas Oeste"},
+    {"33", "San Vicente Norte"},  {"34", "San Vicente Sur"},   {"35", "Usulután Norte"},     {"36", "Usulután Este"},
+    {"37", "Usulután Oeste"},     {"38", "San Miguel Norte"},  {"39", "San Miguel Centro"},  {"40", "San Miguel Oeste"},
+    {"41", "Morazán Norte"},      {"42", "Morazán Sur"},       {"43", "La Unión Norte"},     {"44", "La Unión Sur"}
+};
 
-    if (totalRegistros == 0) { 
-        System.out.println("No hay datos en la matriz principal para generar reportes."); 
-        controlAcceso = 0;
-    } 
+if (controlAcceso == 1) {
+// Validación del año, mes e ID de municipio.
+    do {
 
-    if (controlAcceso == 1) {
+        System.out.print("Ingrese el año a consultar (desde 2020): ");
+        entradaAnio = sc.nextLine().trim();
 
-        while (controlAnio == 0) { 
-            System.out.print("Ingrese el año a consultar (desde 2020): "); 
-            entradaAnio = sc.nextLine().trim();
-            esNumeroAnio = 1;
-            
-            if (entradaAnio.length() == 0) {
-                esNumeroAnio = 0;
+        anioElegido = Integer.parseInt(entradaAnio);
+
+        if (anioElegido >= 2020) {
+            controlAnio = 1;
+        } else {
+            System.out.println("Error. El año debe ser igual o mayor a 2020.");
+        }
+
+    } while (controlAnio == 0);
+
+    do {
+
+        System.out.print("Ingrese el mes a consultar (1 al 12): ");
+        entradaMes = sc.nextLine().trim();
+
+        mesElegido = Integer.parseInt(entradaMes);
+
+        if (mesElegido >= 1 && mesElegido <= 12) {
+            controlMes = 1;
+        } else {
+            System.out.println("Error. El mes debe estar entre 1 y 12.");
+        }
+
+    } while (controlMes == 0);
+
+    do {
+
+        System.out.print("Ingrese ID del municipio a consultar (1 al 44): ");
+        idMunicipioBuscado = sc.nextLine().trim();
+
+        controlID = 0;
+
+        for (i = 0; i < municipios.length && controlID == 0; i++) {
+
+            if (municipios[i][0].equals(idMunicipioBuscado)) {
+                nombreMunicipio = municipios[i][1];
+                controlID = 1;
             }
-            
-            for (k = 0; k < entradaAnio.length() && esNumeroAnio == 1; k++) {
-                if (entradaAnio.charAt(k) < '0' || entradaAnio.charAt(k) > '9') {
-                    esNumeroAnio = 0;
-                }
-            }
-            
-            if (esNumeroAnio == 1) { 
-                anioElegido = Integer.parseInt(entradaAnio); 
-                if (anioElegido >= 2020) { 
-                    controlAnio = 1; 
-                } else {
-                    System.out.println("Error. El año debe ser igual o mayor a 2020."); 
-                }
-            } else {
-                System.out.println("Error, por favor digite un número entero válido.");
-            }
-        } 
+        }
 
-        while (controlMes == 0) { 
-            System.out.print("Ingrese el mes a consultar (1 al 12): "); 
-            entradaMes = sc.nextLine().trim();
-            esNumeroMes = 1;
-            
-            if (entradaMes.length() == 0) {
-                esNumeroMes = 0;
-            }
-            
-            for (k = 0; k < entradaMes.length() && esNumeroMes == 1; k++) {
-                if (entradaMes.charAt(k) < '0' || entradaMes.charAt(k) > '9') {
-                    esNumeroMes = 0;
-                }
-            }
-            
-            if (esNumeroMes == 1) { 
-                mesElegido = Integer.parseInt(entradaMes); 
-                if (mesElegido >= 1 && mesElegido <= 12) { 
-                    controlMes = 1; 
-                } else {
-                    System.out.println("Error. El mes debe estar entre 1 y 12."); 
-                }
-            } else {
-                System.out.println("Error, por favor digite un número entero válido.");
-            }
-        } 
+        if (controlID == 0) {
+            System.out.println("El ID ingresado no existe. Intente nuevamente (1 al 44).");
+        }
 
-        while (controlID == 0) { 
-            System.out.print("Ingrese ID del municipio a consultar (1 al 44): "); 
-            idMunicipioBuscado = sc.nextLine().trim(); 
-            
-            for (i = 0; i < totalRegistros && controlID == 0; i++) { 
-                if (datos[i][4] != null && datos[i][4].equals(idMunicipioBuscado)) { 
-                    indiceAuxiliar = i; 
-                    controlID = 1; 
-                } 
-            } 
-            
-            if (controlID == 0) { 
-                System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44)."); 
-            } 
-        } 
-
-        nombreMunicipio = datos[indiceAuxiliar][5]; 
-        anioBuscadoStr = String.valueOf(anioElegido); 
-        mesBuscadoStr = String.valueOf(mesElegido); 
-
-        for (j = 0; j < totalRegistros; j++) { 
+    } while (controlID == 0);
+// Convertir año y mes a formato de texto para comparación con la matriz principal.
+    anioBuscadoStr = String.valueOf(anioElegido);
+    mesBuscadoStr = String.valueOf(mesElegido);
+}
+        for (j = 0; j < totalRegistros; j++) { // Recorrer matriz principal para encontrar datos que coincidan con los criterios de búsqueda.
             if (datos[j][0] != null && datos[j][1] != null && datos[j][4] != null && datos[j][6] != null) { 
                 if (datos[j][4].equals(idMunicipioBuscado) && datos[j][0].equals(anioBuscadoStr) && datos[j][1].equals(mesBuscadoStr)) { 
                     datosEncontradosContador = datosEncontradosContador + 1; 
@@ -696,7 +668,7 @@ public static void registrarDatos() {
                 } 
             } 
         } 
-
+// Mostrar la tabla de resultados.
         System.out.println("\n-------------------------------------------------------------------------------------"); 
         System.out.println(" REPORTE DE RECAUDACIÓN DE IMPUESTOS "); 
         System.out.println("======================================================================================="); 
@@ -712,7 +684,6 @@ public static void registrarDatos() {
         } 
         System.out.println("--------------------------------------------------------------------------------------"); 
     } 
-}
 
 
     // =========================================
