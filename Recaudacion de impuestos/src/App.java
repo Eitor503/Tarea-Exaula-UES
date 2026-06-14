@@ -650,12 +650,10 @@ String[][] municipios = {
     mesBuscadoStr = String.valueOf(mesElegido);
 
         for (j = 0; j < totalRegistros; j++) { // Recorrer matriz principal para encontrar datos que coincidan con los criterios de búsqueda.
-            if (datos[j][0] != null && datos[j][1] != null && datos[j][4] != null && datos[j][6] != null) { 
                 if (datos[j][4].equals(idMunicipioBuscado) && datos[j][0].equals(anioBuscadoStr) && datos[j][1].equals(mesBuscadoStr)) { 
                     datosEncontradosContador = datosEncontradosContador + 1; 
                     monto = Double.parseDouble(datos[j][6]); 
-                    totalRecaudado += monto; 
-                } 
+                    totalRecaudado += monto;  
             } 
         } 
 // Mostrar la tabla de resultados.
