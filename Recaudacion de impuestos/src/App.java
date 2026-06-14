@@ -331,7 +331,7 @@ public static void registrarDatos() {
     public static void guardarDatosCSV() {
         System.out.println("Módulo 3 - Guardar nuevos datos en CSV");
 
-        String nombreArchivo = "Nuevos_Impuestos.csv";
+        String nombreArchivo = "Impuestos.csv";
 
         try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.File(nombreArchivo))) {
 
