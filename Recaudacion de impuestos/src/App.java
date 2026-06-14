@@ -198,7 +198,6 @@ public static void registrarDatos() {
 
     String idInput = "";
     int indiceEncontrado = -1;
-    int i = 0;
     String zonaAuto = "";
     String deptoAuto = "";
     String municipioAuto = "";
@@ -242,24 +241,25 @@ public static void registrarDatos() {
 
     if (totalRegistros < datos.length) {
 
-        while (indiceEncontrado == -1) {
+      do {
 
-            System.out.print("Ingrese ID del municipio: ");
-            idInput = sc.nextLine().trim();
+    System.out.print("Ingrese ID del municipio (1-44): ");
+    idInput = sc.nextLine().trim();
 
-            for (i = 0; i < totalRegistros && indiceEncontrado == -1; i++) {
+    int id = Integer.parseInt(idInput);
 
-                if (datos[i][ID_MUNICIPIO] != null &&
-                    datos[i][ID_MUNICIPIO].equals(idInput)) {
+    if (id >= 1 && id <= 44) {
 
-                    indiceEncontrado = i;
-                }
-            }
+        indiceEncontrado = id - 1;
 
-            if (indiceEncontrado == -1) {
-                System.out.println("El ID ingresado no existe. Intente nuevamente.");
-            }
-        }
+    } else {
+
+        System.out.println("Error. Debe ingresar un ID entre 1 y 44.");
+        indiceEncontrado = -1;
+
+    }
+
+} while (indiceEncontrado == -1);
 
         zonaAuto = datos[indiceEncontrado][ZONA];
         deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
