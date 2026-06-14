@@ -783,7 +783,7 @@ public static void registrarDatos() {
         double menorMonto = 0;
         double monto;
         String nombreMunicipio = "";
-        boolean encontrado = false;
+        int encontrado = 0;
 
         //=====================================
         // Valiación del año
@@ -807,10 +807,10 @@ public static void registrarDatos() {
         for (i = 0; i < totalRegistros; i++) {
             if (Integer.parseInt(datos[i][ANIO]) == anio && Integer.parseInt(datos[i][MES]) == mes) {
                 monto = Double.parseDouble(datos[i][MONTO]);
-                if (!encontrado || monto < menorMonto) {
+                if (encontrado == 0 || monto < menorMonto) {
                     menorMonto = monto;
                     nombreMunicipio = datos[i][NOMBRE_MUNICIPIO];
-                    encontrado = true;
+                    encontrado = 1;
                 }
             }
         }
@@ -818,7 +818,7 @@ public static void registrarDatos() {
         //===================================
         //Resultados
         //===================================
-        if (encontrado) {
+        if (encontrado == 1) {
             System.out.println("----------------------------------");
             System.out.println("Municipio con menor ingreso");
             System.out.println("----------------------------------");
