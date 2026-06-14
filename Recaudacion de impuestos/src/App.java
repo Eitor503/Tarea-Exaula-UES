@@ -192,32 +192,27 @@ public class App {
     // =========================================
     // MÓDULO 2
     // Responsable: Fatima
-    
-    //DECLARACIÓN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
-static String[][] nuevosRegistros = new String[500][7]; 
+    //VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
+ static String[][] nuevosRegistros = new String[500][7]; 
 static int totalNuevos = 0;
-// FIN DECLARACIÓN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
+// FIN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
 
 public static void registrarDatos() {
-        System.out.println("Módulo 2 - Registrar nuevos municipios");
+    System.out.println("Módulo 2 - Registrar nuevos municipios");
 
-    // --- DECLARACIÓN DE VARIABLES LOCALES --- 
+    //VARIABLES LOCALES  
     String idInput = ""; 
     int indiceEncontrado = -1; 
     int i = 0; 
-    
     String zonaAuto = ""; 
     String deptoAuto = ""; 
     String municipioAuto = ""; 
-    
     int anio = 0; 
-    boolean anioValido = false; 
-    
+    int controlAnio = 0; 
     int mes = 0; 
-    boolean mesValido = false; 
-    
+    int controlMes = 0;  
     double monto = 0; 
-    boolean montoValido = false; 
+    int controlMonto = 0; 
 
     // CUADRO DE LOS 44 MUNICIPIOS DE EL SALVADOR POR ZONAS 
     System.out.println("+--------------------------------------+--------------------------------------+--------------------------------------+"); 
@@ -249,20 +244,21 @@ public static void registrarDatos() {
     System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+"); 
     System.out.println(); 
 
+    // Validaciones de límites de almacenamiento
     if (totalRegistros >= datos.length) { 
         System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros."); 
         return; 
     } 
 
     if (nuevosRegistros == null) { 
-        System.out.println("Error del sistema: La matriz 'nuevosRegistros' no está inicializada."); 
+        System.out.println("Error del sistema: la matriz 'nuevosRegistros' no está inicializada."); 
         return; 
     } 
     if (totalNuevos >= nuevosRegistros.length) { 
-        System.out.println("Error: La matriz externa de nuevos registros está llena."); 
+        System.out.println("Error: la matriz externa de nuevos registros está llena."); 
         return; 
     } 
-    // Bucle para el ID 
+    
     while (indiceEncontrado == -1) { 
         System.out.print("Ingrese ID del municipio: "); 
         idInput = sc.nextLine().trim(); 
@@ -273,7 +269,7 @@ public static void registrarDatos() {
             } 
         } 
         if (indiceEncontrado == -1) { 
-            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44)."); 
+            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44): "); 
         } 
     } 
 
@@ -285,13 +281,12 @@ public static void registrarDatos() {
     System.out.println("-> [Autocompletado] Departamento: " + deptoAuto); 
     System.out.println("-> [Autocompletado] Municipio: " + municipioAuto); 
 
-    // Validación de Año
-    while (!anioValido) { 
+    while (controlAnio == 0) { 
         System.out.print("Ingrese año (desde 2020-fecha actual): "); 
         try { 
             anio = Integer.parseInt(sc.nextLine().trim()); 
             if (anio >= 2020 && anio <= 2026) { 
-                anioValido = true; 
+                controlAnio = 1; 
             } else { 
                 System.out.println("Error. el año debe ser desde 2020 hasta el año actual."); 
             } 
@@ -300,13 +295,12 @@ public static void registrarDatos() {
         } 
     } 
 
-    // Validación de Mes
-    while (!mesValido) { 
+    while (controlMes == 0) { 
         System.out.print("Ingrese mes (1 a 12): "); 
         try { 
             mes = Integer.parseInt(sc.nextLine().trim()); 
             if (mes >= 1 && mes <= 12) { 
-                mesValido = true; 
+                controlMes = 1; 
             } else { 
                 System.out.println("Error. El mes debe estar entre 1 y 12."); 
             } 
@@ -315,13 +309,12 @@ public static void registrarDatos() {
         } 
     } 
 
-    // Validación de Monto
-    while (!montoValido) { 
+    while (controlMonto == 0) { 
         System.out.print("Ingrese monto (0 o mayor): "); 
         try { 
             monto = Double.parseDouble(sc.nextLine().trim()); 
             if (monto >= 0) { 
-                montoValido = true; 
+                controlMonto = 1; 
             } else { 
                 System.out.println("Error. El monto no puede ser negativo."); 
             } 
@@ -330,7 +323,7 @@ public static void registrarDatos() {
         } 
     } 
 
-    // Guardar en matriz principal 
+    // 1. GUARDAR EN LA MATRIZ PRINCIPAL (datos)
     datos[totalRegistros][ANIO] = String.valueOf(anio); 
     datos[totalRegistros][MES] = String.valueOf(mes); 
     datos[totalRegistros][ZONA] = zonaAuto; 
@@ -338,8 +331,9 @@ public static void registrarDatos() {
     datos[totalRegistros][ID_MUNICIPIO] = idInput; 
     datos[totalRegistros][NOMBRE_MUNICIPIO] = municipioAuto; 
     datos[totalRegistros][MONTO] = String.valueOf(monto); 
+    totalRegistros++; 
 
-    // Guardar en matriz externa 
+    // 2. GUARDAR EN LA MATRIZ EXTERNA (nuevosRegistros)
     nuevosRegistros[totalNuevos][ANIO] = String.valueOf(anio); 
     nuevosRegistros[totalNuevos][MES] = String.valueOf(mes); 
     nuevosRegistros[totalNuevos][ZONA] = zonaAuto; 
@@ -347,29 +341,31 @@ public static void registrarDatos() {
     nuevosRegistros[totalNuevos][ID_MUNICIPIO] = idInput; 
     nuevosRegistros[totalNuevos][NOMBRE_MUNICIPIO] = municipioAuto; 
     nuevosRegistros[totalNuevos][MONTO] = String.valueOf(monto); 
-
-    totalRegistros++; 
     totalNuevos++; 
-    System.out.println("\n¡Registro exitoso! Datos almacenados correctamente."); 
-} 
+    
+    System.out.println("¡Registro exitoso! Datos almacenados correctamente. ");
+}
 
     // =========================================
     // MÓDULO 3
     // Responsable: Fátima
     // =========================================
     public static void guardarDatosCSV() {
+    // DECLARACIÓN DE VARIABLES LOCALES 
+    String nombreArchivo = "Impuestos.csv";
+    String lineaCsv = "";
+    int i = 0; 
+    //Fin DECLARACIÓN DE VARIABLES LOCALES
+    
     if (totalNuevos == 0) {
         System.out.println("ERROR, aún no se han registrado datos en el sistema.");
         return;
     }
 
-    String nombreArchivo = "Impuestos.csv";
-
-    // Abrimos el archivo en modo APPEND (true) para añadir al final sin borrar las líneas existentes
     try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.FileWriter(nombreArchivo, true))) {
         
-        for (int i = 0; i < totalNuevos; i++) {
-            String lineaCsv = nuevosRegistros[i][ANIO] + "," +
+        for ( i = 0; i < totalNuevos; i++) {
+             lineaCsv = nuevosRegistros[i][ANIO] + "," +
                             nuevosRegistros[i][MES] + "," +
                             nuevosRegistros[i][ZONA] + "," +
                             nuevosRegistros[i][DEPARTAMENTO] + "," +
