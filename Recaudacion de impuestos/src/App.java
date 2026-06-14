@@ -588,97 +588,148 @@ public static void registrarDatos() {
     // MÓDULO 6
     // Responsable: Fátima
     // =========================================
-    public static void reporteMunicipioMesAnual() {
-    System.out.println("Módulo 6 - Reporte por municipio en mes y año elegible");
+    public static void reporteMunicipioMesAnual() { 
+    System.out.println("Módulo 6 - Reporte por municipio en mes y año elegible"); 
+
+    // =====================================================================
+    // --- DECLARACIÓN DE TODAS LAS VARIABLES LOCALES AL INICIO ---
+    // =====================================================================
+    int controlAnio = 0;
+    int controlMes = 0;
+    int controlID = 0;
+    int datosEncontradosContador = 0; 
     
-    if (totalRegistros == 0) {
-        System.out.println("No hay datos en la matriz principal para generar reportes.");
-        return;
-    }
-
-    int anioElegido = 0;
-    while (true) {
-        System.out.print("Ingrese el año a consultar (desde 2020): ");
-        try {
-            anioElegido = Integer.parseInt(sc.nextLine().trim());
-            if (anioElegido >= 2020) {
-                break;
-            }
-            System.out.println("Error. El año debe ser igual o mayor a 2020.");
-        } catch (NumberFormatException e) {
-            System.out.println("Error, por favor digite un número entero válido.");
-        }
-    }
-
-    int mesElegido = 0;
-    while (true) {
-        System.out.print("Ingrese el mes a consultar (1 al 12): ");
-        try {
-            mesElegido = Integer.parseInt(sc.nextLine().trim());
-            if (mesElegido >= 1 && mesElegido <= 12) {
-                break;
-            }
-            System.out.println("Error. El mes debe estar entre 1 y 12.");
-        } catch (NumberFormatException e) {
-            System.out.println("Error, por favor digite un número entero válido.");
-        }
-    }
-
-    String idMunicipioBuscado = "";
-    int indiceAuxiliar = -1;
-    while (indiceAuxiliar == -1) {
-        System.out.print("Ingrese ID del municipio a consultar (1 al 44): ");
-        idMunicipioBuscado = sc.nextLine().trim();
-
-        for (int i = 0; i < totalRegistros; i++) {
-            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idMunicipioBuscado)) {
-                indiceAuxiliar = i;
-                break;
-            }
-        }
-        if (indiceAuxiliar == -1) {
-            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44).");
-        }
-    }
-
-    String nombreMunicipio = datos[indiceAuxiliar][NOMBRE_MUNICIPIO];
-    String anioBuscadoStr = String.valueOf(anioElegido);
-    String mesBuscadoStr = String.valueOf(mesElegido);
+    int anioElegido = 0; 
+    int mesElegido = 0; 
+    int i = 0;
+    int j = 0;
+    int k = 0; // Para recorrer textos carácter por carácter
     
+    String idMunicipioBuscado = ""; 
+    int indiceAuxiliar = -1; 
+    
+    String nombreMunicipio = "";
+    String anioBuscadoStr = "";
+    String mesBuscadoStr = "";
     double totalRecaudado = 0.0;
-    boolean encontroDatos = false;
-
-    for (int j = 0; j < totalRegistros; j++) {
-        if (datos[j][ANIO] == null || datos[j][MES] == null || datos[j][ID_MUNICIPIO] == null || datos[j][MONTO] == null) {
-            continue;
-        }
-
-        if (datos[j][ID_MUNICIPIO].equals(idMunicipioBuscado) && 
-            datos[j][ANIO].equals(anioBuscadoStr) && 
-            datos[j][MES].equals(mesBuscadoStr)) {
-            
-            encontroDatos = true;
-            double monto = Double.parseDouble(datos[j][MONTO]);
-            totalRecaudado += monto;
-        }
-    }
-    System.out.println("\n-------------------------------------------------------------------------------------");
-    System.out.println("                         REPORTE DE RECAUDACIÓN DE IMPUESTOS                           ");
-    System.out.println("=======================================================================================");
-    System.out.println("| ID MUNICIPIO | NOMBRE MUNICIPIO             | PERIODO         | TOTAL RECAUDADO     |");
-    System.out.println("+--------------+------------------------------+-----------------+---------------------+");
+    double monto = 0.0;
     
-    String periodoStr = "Mes " + mesElegido + " / " + anioElegido;
-    if (!encontroDatos) {
-        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
-                idMunicipioBuscado, nombreMunicipio, periodoStr, "$0.00 (Sin datos)");
-    } else {
-        String montoStr = String.format("$%.2f", totalRecaudado);
-        System.out.printf("| %-12s | %-28s | %-15s | %-19s |\n", 
-                idMunicipioBuscado, nombreMunicipio, periodoStr, montoStr);
-    }
-    System.out.println("--------------------------------------------------------------------------------------");    
+    String entradaAnio = "";
+    int esNumeroAnio = 1;
+    
+    String entradaMes = "";
+    int esNumeroMes = 1;
+    
+    int controlAcceso = 1;
+
+    if (totalRegistros == 0) { 
+        System.out.println("No hay datos en la matriz principal para generar reportes."); 
+        controlAcceso = 0;
+    } 
+
+    if (controlAcceso == 1) {
+
+        while (controlAnio == 0) { 
+            System.out.print("Ingrese el año a consultar (desde 2020): "); 
+            entradaAnio = sc.nextLine().trim();
+            esNumeroAnio = 1;
+            
+            if (entradaAnio.length() == 0) {
+                esNumeroAnio = 0;
+            }
+            
+            for (k = 0; k < entradaAnio.length() && esNumeroAnio == 1; k++) {
+                if (entradaAnio.charAt(k) < '0' || entradaAnio.charAt(k) > '9') {
+                    esNumeroAnio = 0;
+                }
+            }
+            
+            if (esNumeroAnio == 1) { 
+                anioElegido = Integer.parseInt(entradaAnio); 
+                if (anioElegido >= 2020) { 
+                    controlAnio = 1; 
+                } else {
+                    System.out.println("Error. El año debe ser igual o mayor a 2020."); 
+                }
+            } else {
+                System.out.println("Error, por favor digite un número entero válido.");
+            }
+        } 
+
+        while (controlMes == 0) { 
+            System.out.print("Ingrese el mes a consultar (1 al 12): "); 
+            entradaMes = sc.nextLine().trim();
+            esNumeroMes = 1;
+            
+            if (entradaMes.length() == 0) {
+                esNumeroMes = 0;
+            }
+            
+            for (k = 0; k < entradaMes.length() && esNumeroMes == 1; k++) {
+                if (entradaMes.charAt(k) < '0' || entradaMes.charAt(k) > '9') {
+                    esNumeroMes = 0;
+                }
+            }
+            
+            if (esNumeroMes == 1) { 
+                mesElegido = Integer.parseInt(entradaMes); 
+                if (mesElegido >= 1 && mesElegido <= 12) { 
+                    controlMes = 1; 
+                } else {
+                    System.out.println("Error. El mes debe estar entre 1 y 12."); 
+                }
+            } else {
+                System.out.println("Error, por favor digite un número entero válido.");
+            }
+        } 
+
+        while (controlID == 0) { 
+            System.out.print("Ingrese ID del municipio a consultar (1 al 44): "); 
+            idMunicipioBuscado = sc.nextLine().trim(); 
+            
+            for (i = 0; i < totalRegistros && controlID == 0; i++) { 
+                if (datos[i][4] != null && datos[i][4].equals(idMunicipioBuscado)) { 
+                    indiceAuxiliar = i; 
+                    controlID = 1; 
+                } 
+            } 
+            
+            if (controlID == 0) { 
+                System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44)."); 
+            } 
+        } 
+
+        nombreMunicipio = datos[indiceAuxiliar][5]; 
+        anioBuscadoStr = String.valueOf(anioElegido); 
+        mesBuscadoStr = String.valueOf(mesElegido); 
+
+        for (j = 0; j < totalRegistros; j++) { 
+            if (datos[j][0] != null && datos[j][1] != null && datos[j][4] != null && datos[j][6] != null) { 
+                if (datos[j][4].equals(idMunicipioBuscado) && datos[j][0].equals(anioBuscadoStr) && datos[j][1].equals(mesBuscadoStr)) { 
+                    datosEncontradosContador = datosEncontradosContador + 1; 
+                    monto = Double.parseDouble(datos[j][6]); // Columna 6 = Monto
+                    totalRecaudado += monto; 
+                } 
+            } 
+        } 
+
+        System.out.println("\n-------------------------------------------------------------------------------------"); 
+        System.out.println(" REPORTE DE RECAUDACIÓN DE IMPUESTOS "); 
+        System.out.println("======================================================================================="); 
+        System.out.println("ID MUNICIPIO: " + idMunicipioBuscado);
+        System.out.println("NOMBRE MUNICIPIO: " + nombreMunicipio);
+        System.out.println("PERIODO: Mes " + mesElegido + " / " + anioElegido);
+        System.out.println("---------------------------------------------------------------------------------------"); 
+        
+        if (datosEncontradosContador == 0) { 
+            System.out.println("TOTAL RECAUDADO: $0.00 (Sin datos)"); 
+        } else { 
+            System.out.println("TOTAL RECAUDADO: $" + totalRecaudado); 
+        } 
+        System.out.println("--------------------------------------------------------------------------------------"); 
+    } 
 }
+
 
     // =========================================
     // MÓDULO 7
