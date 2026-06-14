@@ -585,8 +585,6 @@ public static void registrarDatos() {
     String mesBuscadoStr = "";
     double totalRecaudado = 0.0;
     double monto = 0.0;
-    String entradaAnio = "";
-    String entradaMes = "";
 // Matriz con ID y nombre de municipios para validación de entrada y autocompletado.
 String[][] municipios = {
     {"1", "Ahuachapán Norte"},    {"2", "Ahuachapán Centro"},  {"3", "Ahuachapán Sur"},      {"4", "Santa Ana Norte"},
@@ -606,9 +604,7 @@ String[][] municipios = {
     do {
 
         System.out.print("Ingrese el año a consultar (desde 2020): ");
-        entradaAnio = sc.nextLine().trim();
-
-        anioElegido = Integer.parseInt(entradaAnio);
+        anioElegido = Integer.parseInt(sc.nextLine().trim());
 
         if (anioElegido >= 2020) {
             controlAnio = 1;
@@ -621,9 +617,7 @@ String[][] municipios = {
     do {
 
         System.out.print("Ingrese el mes a consultar (1 al 12): ");
-        entradaMes = sc.nextLine().trim();
-
-        mesElegido = Integer.parseInt(entradaMes);
+        mesElegido = Integer.parseInt(sc.nextLine().trim());
 
         if (mesElegido >= 1 && mesElegido <= 12) {
             controlMes = 1;
@@ -637,8 +631,6 @@ String[][] municipios = {
 
         System.out.print("Ingrese ID del municipio a consultar (1 al 44): ");
         idMunicipioBuscado = sc.nextLine().trim();
-
-        controlID = 0;
 
         for (i = 0; i < municipios.length && controlID == 0; i++) {
 
