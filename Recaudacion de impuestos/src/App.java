@@ -758,7 +758,6 @@ public static void registrarDatos() {
     // =========================================
 
     public static void municipioMayorIngreso() {
-        System.out.println("Módulo 8");
         
         //=======================
         // Declaración de vectores
@@ -803,8 +802,7 @@ public static void registrarDatos() {
     // =========================================
 
     public static void municipioMenorIngreso() {
-        System.out.println("Modulo 9");
-
+        
         //========================
         //Declaración de variables 
         //========================
@@ -987,7 +985,6 @@ public static void registrarDatos() {
     // =========================================
 
     public static void ordenarDatosBubbleSort() {
-        System.out.println("Módulo 12");
 
         //Declaración de variables
         int i;
