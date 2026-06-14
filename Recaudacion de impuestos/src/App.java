@@ -192,199 +192,173 @@ public class App {
     // =========================================
     // MÓDULO 2
     // Responsable: Fatima
-    //VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
- static String[][] nuevosRegistros = new String[500][7]; 
-static int totalNuevos = 0;
-// FIN DE VARIABLES GLOBALES Y CONSTANTES PARA EL MÓDULO 2
-
 public static void registrarDatos() {
+
     System.out.println("Módulo 2 - Registrar nuevos municipios");
 
-    //VARIABLES LOCALES  
-    String idInput = ""; 
-    int indiceEncontrado = -1; 
-    int i = 0; 
-    String zonaAuto = ""; 
-    String deptoAuto = ""; 
-    String municipioAuto = ""; 
-    int anio = 0; 
-    int controlAnio = 0; 
-    int mes = 0; 
-    int controlMes = 0;  
-    double monto = 0; 
-    int controlMonto = 0; 
+    String idInput = "";
+    int indiceEncontrado = -1;
+    int i = 0;
+    String zonaAuto = "";
+    String deptoAuto = "";
+    String municipioAuto = "";
 
-    // CUADRO DE LOS 44 MUNICIPIOS DE EL SALVADOR POR ZONAS 
-    System.out.println("+--------------------------------------+--------------------------------------+--------------------------------------+"); 
-    System.out.println("| ID | ZONA OCCIDENTAL (11)            |ID  | ZONA CENTRAL Y PARACENTRAL (23) | ID | ZONA ORIENTAL (10)              |"); 
-    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+"); 
-    System.out.println("|  1 | Ahuachapán Norte                | 12 | Chalatenango Norte              | 35 | Usulután Norte                  |"); 
-    System.out.println("|  2 | Ahuachapán Centro               | 13 | Chalatenango Centro             | 36 | Usulután Este                   |"); 
-    System.out.println("|  3 | Ahuachapán Sur                  | 14 | Chalatenango Sur                | 37 | Usulután Oeste                  |"); 
-    System.out.println("|  4 | Santa Ana Norte                 | 15 | La Libertad Norte               | 38 | San Miguel Norte                |"); 
-    System.out.println("|  5 | Santa Ana Centro                | 16 | La Libertad Centro              | 39 | San Miguel Centro               |"); 
-    System.out.println("|  6 | Santa Ana Este                  | 17 | La Libertad Oeste               | 40 | San Miguel Oeste                |"); 
-    System.out.println("|  7 | Santa Ana Oeste                 | 18 | La Libertad Este                | 41 | Morazán Norte                   |"); 
-    System.out.println("|  8 | Sonsonate Norte                 | 19 | La Libertad Sur                 | 42 | Morazán Sur                     |"); 
-    System.out.println("|  9 | Sonsonate Centro                | 20 | La Libertad Costa               | 43 | La Unión Norte                  |"); 
-    System.out.println("| 10 | Sonsonate Este                  | 21 | San Salvador Norte              | 44 | La Unión Sur                    |"); 
-    System.out.println("| 11 | Sonsonate Oeste                 | 22 | San Salvador Oeste              |    |                                 |"); 
-    System.out.println("|    |                                 | 23 | San Salvador Centro             |    |                                 |"); 
-    System.out.println("|    |                                 | 24 | San Salvador Este               |    |                                 |"); 
-    System.out.println("|    |                                 | 25 | San Salvador Sur                |    |                                 |"); 
-    System.out.println("|    |                                 | 26 | Cuscatlán Norte                 |    |                                 |"); 
-    System.out.println("|    |                                 | 27 | Cuscatlán Sur                   |    |                                 |"); 
-    System.out.println("|    |                                 | 28 | La Paz Oeste                    |    |                                 |"); 
-    System.out.println("|    |                                 | 29 | La Paz Centro                   |    |                                 |"); 
-    System.out.println("|    |                                 | 30 | La Paz Este                     |    |                                 |"); 
-    System.out.println("|    |                                 | 31 | Cabañas Este                    |    |                                 |"); 
-    System.out.println("|    |                                 | 32 | Cabañas Oeste                   |    |                                 |"); 
-    System.out.println("|    |                                 | 33 | San Vicente Norte               |    |                                 |"); 
-    System.out.println("|    |                                 | 34 | San Vicente Sur                 |    |                                 |"); 
-    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+"); 
-    System.out.println(); 
+    int anio = 0;
+    int controlAnio = 0;
 
-    // Validaciones de límites de almacenamiento
-    if (totalRegistros >= datos.length) { 
-        System.out.println("Error, no se pueden registrar más municipios. Límite alcanzado de 500 registros."); 
-        return; 
-    } 
+    int mes = 0;
+    int controlMes = 0;
 
-    if (nuevosRegistros == null) { 
-        System.out.println("Error del sistema: la matriz 'nuevosRegistros' no está inicializada."); 
-        return; 
-    } 
-    if (totalNuevos >= nuevosRegistros.length) { 
-        System.out.println("Error: la matriz externa de nuevos registros está llena."); 
-        return; 
-    } 
-    
-    while (indiceEncontrado == -1) { 
-        System.out.print("Ingrese ID del municipio: "); 
-        idInput = sc.nextLine().trim(); 
+    double monto = 0;
+    int controlMonto = 0;
 
-        for (i = 0; i < totalRegistros && indiceEncontrado == -1; i++) { 
-            if (datos[i][ID_MUNICIPIO] != null && datos[i][ID_MUNICIPIO].equals(idInput)) { 
-                indiceEncontrado = i; 
-            } 
-        } 
-        if (indiceEncontrado == -1) { 
-            System.out.println("El ID ingresado no existe en los registros por favor intente de nuevo (1 al 44): "); 
-        } 
-    } 
+    System.out.println("+--------------------------------------+--------------------------------------+--------------------------------------+");
+    System.out.println("| ID | ZONA OCCIDENTAL (11)            |ID  | ZONA CENTRAL Y PARACENTRAL (23) | ID | ZONA ORIENTAL (10)              |");
+    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+");
+    System.out.println("|  1 | Ahuachapán Norte                | 12 | Chalatenango Norte              | 35 | Usulután Norte                  |");
+    System.out.println("|  2 | Ahuachapán Centro               | 13 | Chalatenango Centro             | 36 | Usulután Este                   |");
+    System.out.println("|  3 | Ahuachapán Sur                  | 14 | Chalatenango Sur                | 37 | Usulután Oeste                  |");
+    System.out.println("|  4 | Santa Ana Norte                 | 15 | La Libertad Norte               | 38 | San Miguel Norte                |");
+    System.out.println("|  5 | Santa Ana Centro                | 16 | La Libertad Centro              | 39 | San Miguel Centro               |");
+    System.out.println("|  6 | Santa Ana Este                  | 17 | La Libertad Oeste               | 40 | San Miguel Oeste                |");
+    System.out.println("|  7 | Santa Ana Oeste                 | 18 | La Libertad Este                | 41 | Morazán Norte                   |");
+    System.out.println("|  8 | Sonsonate Norte                 | 19 | La Libertad Sur                 | 42 | Morazán Sur                     |");
+    System.out.println("|  9 | Sonsonate Centro                | 20 | La Libertad Costa               | 43 | La Unión Norte                  |");
+    System.out.println("| 10 | Sonsonate Este                  | 21 | San Salvador Norte              | 44 | La Unión Sur                    |");
+    System.out.println("| 11 | Sonsonate Oeste                 | 22 | San Salvador Oeste              |    |                                 |");
+    System.out.println("|    |                                 | 23 | San Salvador Centro             |    |                                 |");
+    System.out.println("|    |                                 | 24 | San Salvador Este               |    |                                 |");
+    System.out.println("|    |                                 | 25 | San Salvador Sur                |    |                                 |");
+    System.out.println("|    |                                 | 26 | Cuscatlán Norte                 |    |                                 |");
+    System.out.println("|    |                                 | 27 | Cuscatlán Sur                   |    |                                 |");
+    System.out.println("|    |                                 | 28 | La Paz Oeste                    |    |                                 |");
+    System.out.println("|    |                                 | 29 | La Paz Centro                   |    |                                 |");
+    System.out.println("|    |                                 | 30 | La Paz Este                     |    |                                 |");
+    System.out.println("|    |                                 | 31 | Cabañas Este                    |    |                                 |");
+    System.out.println("|    |                                 | 32 | Cabañas Oeste                   |    |                                 |");
+    System.out.println("|    |                                 | 33 | San Vicente Norte               |    |                                 |");
+    System.out.println("|    |                                 | 34 | San Vicente Sur                 |    |                                 |");
+    System.out.println("+----+---------------------------------+----+---------------------------------+----+---------------------------------+");
 
-    zonaAuto = datos[indiceEncontrado][ZONA]; 
-    deptoAuto = datos[indiceEncontrado][DEPARTAMENTO]; 
-    municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO]; 
+    if (totalRegistros < datos.length) {
 
-    System.out.println("-> [Autocompletado] Zona: " + zonaAuto); 
-    System.out.println("-> [Autocompletado] Departamento: " + deptoAuto); 
-    System.out.println("-> [Autocompletado] Municipio: " + municipioAuto); 
+        while (indiceEncontrado == -1) {
 
-    while (controlAnio == 0) { 
-        System.out.print("Ingrese año (desde 2020-fecha actual): "); 
-        try { 
-            anio = Integer.parseInt(sc.nextLine().trim()); 
-            if (anio >= 2020 && anio <= 2026) { 
-                controlAnio = 1; 
-            } else { 
-                System.out.println("Error. el año debe ser desde 2020 hasta el año actual."); 
-            } 
-        } catch (NumberFormatException e) { 
-            System.out.println("Error. Ingrese un número entero válido."); 
-        } 
-    } 
+            System.out.print("Ingrese ID del municipio: ");
+            idInput = sc.nextLine().trim();
 
-    while (controlMes == 0) { 
-        System.out.print("Ingrese mes (1 a 12): "); 
-        try { 
-            mes = Integer.parseInt(sc.nextLine().trim()); 
-            if (mes >= 1 && mes <= 12) { 
-                controlMes = 1; 
-            } else { 
-                System.out.println("Error. El mes debe estar entre 1 y 12."); 
-            } 
-        } catch (NumberFormatException e) { 
-            System.out.println("Error. Ingrese un número entero válido."); 
-        } 
-    } 
+            for (i = 0; i < totalRegistros && indiceEncontrado == -1; i++) {
 
-    while (controlMonto == 0) { 
-        System.out.print("Ingrese monto (0 o mayor): "); 
-        try { 
-            monto = Double.parseDouble(sc.nextLine().trim()); 
-            if (monto >= 0) { 
-                controlMonto = 1; 
-            } else { 
-                System.out.println("Error. El monto no puede ser negativo."); 
-            } 
-        } catch (NumberFormatException e) { 
-            System.out.println("Error. Ingrese un número decimal válido."); 
-        } 
-    } 
+                if (datos[i][ID_MUNICIPIO] != null &&
+                    datos[i][ID_MUNICIPIO].equals(idInput)) {
 
-    // 1. GUARDAR EN LA MATRIZ PRINCIPAL (datos)
-    datos[totalRegistros][ANIO] = String.valueOf(anio); 
-    datos[totalRegistros][MES] = String.valueOf(mes); 
-    datos[totalRegistros][ZONA] = zonaAuto; 
-    datos[totalRegistros][DEPARTAMENTO] = deptoAuto; 
-    datos[totalRegistros][ID_MUNICIPIO] = idInput; 
-    datos[totalRegistros][NOMBRE_MUNICIPIO] = municipioAuto; 
-    datos[totalRegistros][MONTO] = String.valueOf(monto); 
-    totalRegistros++; 
+                    indiceEncontrado = i;
+                }
+            }
 
-    // 2. GUARDAR EN LA MATRIZ EXTERNA (nuevosRegistros)
-    nuevosRegistros[totalNuevos][ANIO] = String.valueOf(anio); 
-    nuevosRegistros[totalNuevos][MES] = String.valueOf(mes); 
-    nuevosRegistros[totalNuevos][ZONA] = zonaAuto; 
-    nuevosRegistros[totalNuevos][DEPARTAMENTO] = deptoAuto; 
-    nuevosRegistros[totalNuevos][ID_MUNICIPIO] = idInput; 
-    nuevosRegistros[totalNuevos][NOMBRE_MUNICIPIO] = municipioAuto; 
-    nuevosRegistros[totalNuevos][MONTO] = String.valueOf(monto); 
-    totalNuevos++; 
-    
-    System.out.println("¡Registro exitoso! Datos almacenados correctamente. ");
+            if (indiceEncontrado == -1) {
+                System.out.println("El ID ingresado no existe. Intente nuevamente.");
+            }
+        }
+
+        zonaAuto = datos[indiceEncontrado][ZONA];
+        deptoAuto = datos[indiceEncontrado][DEPARTAMENTO];
+        municipioAuto = datos[indiceEncontrado][NOMBRE_MUNICIPIO];
+
+        System.out.println("-> [Autocompletado] Zona: " + zonaAuto);
+        System.out.println("-> [Autocompletado] Departamento: " + deptoAuto);
+        System.out.println("-> [Autocompletado] Municipio: " + municipioAuto);
+
+
+        while (controlAnio == 0) {
+
+    System.out.print("Ingrese año (2020-2026): ");
+    anio = Integer.parseInt(sc.nextLine());
+
+    if (anio >= 2020 && anio <= 2026) {
+        controlAnio = 1;
+    } else {
+        System.out.println("Error. El año debe estar entre 2020 y 2026.");
+    }
 }
 
+       while (controlMes == 0) {
+
+    System.out.print("Ingrese mes (1-12): ");
+    mes = Integer.parseInt(sc.nextLine());
+
+    if (mes >= 1 && mes <= 12) {
+        controlMes = 1;
+    } else {
+        System.out.println("Error. El mes debe estar entre 1 y 12.");
+    }
+}
+
+       while (controlMonto == 0) {
+
+    System.out.print("Ingrese monto (0 o mayor): ");
+    monto = Double.parseDouble(sc.nextLine());
+
+    if (monto >= 0) {
+        controlMonto = 1;
+    } else {
+        System.out.println("Error. El monto no puede ser negativo.");
+    }
+}
+
+        datos[totalRegistros][ANIO] = String.valueOf(anio);
+        datos[totalRegistros][MES] = String.valueOf(mes);
+        datos[totalRegistros][ZONA] = zonaAuto;
+        datos[totalRegistros][DEPARTAMENTO] = deptoAuto;
+        datos[totalRegistros][ID_MUNICIPIO] = idInput;
+        datos[totalRegistros][NOMBRE_MUNICIPIO] = municipioAuto;
+        datos[totalRegistros][MONTO] = String.valueOf(monto);
+
+        totalRegistros++;
+
+        System.out.println("¡Registro exitoso! Datos almacenados correctamente.");
+
+    } else {
+
+        System.out.println("Error. Límite máximo de registros alcanzado.");
+
+    }
+}
     // =========================================
     // MÓDULO 3
     // Responsable: Fátima
     // =========================================
     public static void guardarDatosCSV() {
-    // DECLARACIÓN DE VARIABLES LOCALES 
-    String nombreArchivo = "Impuestos.csv";
-    String lineaCsv = "";
-    int i = 0; 
-    //Fin DECLARACIÓN DE VARIABLES LOCALES
-    
-    if (totalNuevos == 0) {
-        System.out.println("ERROR, aún no se han registrado datos en el sistema.");
-        return;
-    }
+        System.out.println("Módulo 3 - Guardar nuevos datos en CSV");
 
-    try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.FileWriter(nombreArchivo, true))) {
-        
-        for ( i = 0; i < totalNuevos; i++) {
-             lineaCsv = nuevosRegistros[i][ANIO] + "," +
-                            nuevosRegistros[i][MES] + "," +
-                            nuevosRegistros[i][ZONA] + "," +
-                            nuevosRegistros[i][DEPARTAMENTO] + "," +
-                            nuevosRegistros[i][ID_MUNICIPIO] + "," +
-                            nuevosRegistros[i][NOMBRE_MUNICIPIO] + "," +
-                            nuevosRegistros[i][MONTO];
-            
-            // Escribimos cada uno de los nuevos registros al final del archivo físico
-            escritor.println(lineaCsv);
+        String nombreArchivo = "Nuevos_Impuestos.csv";
+
+        try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.File(nombreArchivo))) {
+
+            // Escribir encabezado
+            escritor.println("Año,Mes,Zona,Departamento,ID Municipio,Nombre Municipio,Monto");
+
+            // Escribir registros
+            for (int i = 0; i < totalRegistros; i++) {
+                escritor.println(
+                        datos[i][ANIO] + "," +
+                        datos[i][MES] + "," +
+                        datos[i][ZONA] + "," +
+                        datos[i][DEPARTAMENTO] + "," +
+                        datos[i][ID_MUNICIPIO] + "," +
+                        datos[i][NOMBRE_MUNICIPIO] + "," +
+                        datos[i][MONTO]
+                );
+            }
+
+            System.out.println("Datos guardados exitosamente en " + nombreArchivo);
+
+        } catch (Exception e) {
+            System.out.println("Error al guardar el archivo.");
+            e.printStackTrace();
         }
-
-        System.out.println("Se han agregado exitosamente " + totalNuevos + " registros nuevos de forma permanente al archivo CSV.");
-        totalNuevos = 0;
-
-    } catch (Exception e) {
-        System.out.println("Error. No fue posible agregar la información al archivo CSV.");
-        e.printStackTrace();
     }
-}
+    
 
     // =========================================
     // MÓDULO 4
