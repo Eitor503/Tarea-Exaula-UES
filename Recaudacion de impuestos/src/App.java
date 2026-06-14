@@ -24,6 +24,7 @@ public class App {
 
     // Control de registros
     static int totalRegistros = 0;
+    static int nuevosRegistros = 0;
 
     /*
         COLUMNAS MATRIZ
@@ -315,6 +316,7 @@ public static void registrarDatos() {
         datos[totalRegistros][MONTO] = String.valueOf(monto);
 
         totalRegistros++;
+        nuevosRegistros++;
 
         System.out.println("¡Registro exitoso! Datos almacenados correctamente.");
 
@@ -328,37 +330,45 @@ public static void registrarDatos() {
     // MÓDULO 3
     // Responsable: Fátima
     // =========================================
-    public static void guardarDatosCSV() {
-        System.out.println("Módulo 3 - Guardar nuevos datos en CSV");
+        public static void guardarDatosCSV() {
 
-        String nombreArchivo = "Impuestos.csv";
+    System.out.println("Módulo 3 - Guardar nuevos datos en CSV");
+
+    String nombreArchivo = "Impuestos.csv";
+
+    if (nuevosRegistros > 0) {
 
         try (java.io.PrintWriter escritor = new java.io.PrintWriter(new java.io.File(nombreArchivo))) {
 
-            // Escribir encabezado
             escritor.println("Año,Mes,Zona,Departamento,ID Municipio,Nombre Municipio,Monto");
 
-            // Escribir registros
             for (int i = 0; i < totalRegistros; i++) {
+
                 escritor.println(
-                        datos[i][ANIO] + "," +
-                        datos[i][MES] + "," +
-                        datos[i][ZONA] + "," +
-                        datos[i][DEPARTAMENTO] + "," +
-                        datos[i][ID_MUNICIPIO] + "," +
-                        datos[i][NOMBRE_MUNICIPIO] + "," +
-                        datos[i][MONTO]
+                    datos[i][ANIO] + "," +
+                    datos[i][MES] + "," +
+                    datos[i][ZONA] + "," +
+                    datos[i][DEPARTAMENTO] + "," +
+                    datos[i][ID_MUNICIPIO] + "," +
+                    datos[i][NOMBRE_MUNICIPIO] + "," +
+                    datos[i][MONTO]
                 );
             }
 
             System.out.println("Datos guardados exitosamente en " + nombreArchivo);
 
         } catch (Exception e) {
+
             System.out.println("Error al guardar el archivo.");
-            e.printStackTrace();
+
         }
+
+    } else {
+
+        System.out.println("ERROR: No se han registrado datos en el sistema.");
+
     }
-    
+}
 
     // =========================================
     // MÓDULO 4
